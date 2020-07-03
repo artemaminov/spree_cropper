@@ -1,4 +1,4 @@
-let Croom = function() {
+let Cropper = function() {
     this.devices = [
         {
             desktop: {
@@ -39,7 +39,7 @@ let Croom = function() {
     ];
 }
 
-Croom.prototype.initTargets = function() {
+Cropper.prototype.initTargets = function() {
     for (let target of this.devices) {
         $('#targets').append(`<div id="target-${this.getDeviceName(target)}"></div>`);
         this.canvasCopy(target);
@@ -47,7 +47,7 @@ Croom.prototype.initTargets = function() {
     }
 }
 
-Croom.prototype.initCrop = function(target) {
+Cropper.prototype.initCrop = function(target) {
     $('#previews').append(`<div id="preview-${this.getDeviceName(target)}"></div>`);
     let dimensions = this.getDevice(target).dimensions;
     console.log(dimensions);
@@ -64,15 +64,15 @@ Croom.prototype.initCrop = function(target) {
     });
 }
 
-Croom.prototype.getDeviceName = function(device) {
+Cropper.prototype.getDeviceName = function(device) {
     return Object.keys(device)[0];
 }
 
-Croom.prototype.getDevice = function(target) {
+Cropper.prototype.getDevice = function(target) {
     return target[this.getDeviceName(target)];
 }
 
-Croom.prototype.canvasCopy = function(target) {
+Cropper.prototype.canvasCopy = function(target) {
     let source = document.getElementById(`source`);
     let deviceName = this.getDeviceName(target);
     let canvasesContainer = document.getElementById(`target-${deviceName}`);
@@ -81,22 +81,22 @@ Croom.prototype.canvasCopy = function(target) {
     canvasesContainer.appendChild(canvas);
 }
 
-Croom.prototype.getCoords = function(target) {
+Cropper.prototype.getCoords = function(target) {
     return $(`#${this.getDeviceName(target)}-canvas`).rcrop('getValues');
 }
 
 $(function() {
-    let croom = new Croom();
-    croom.initTargets();
+    let cropper = new Cropper();
+    cropper.initTargets();
     $('#values').click(function() {
         let text = '';
         let coords = {};
-        for (let target of croom.devices) {
-            coords = croom.getCoords(target);
-            text += `${croom.getDeviceName(target) }: ${ coords.width }x${ coords.height }+${ coords.x }+${ coords.y } | `;
-            croom.getDevice(target).coords = coords;
+        for (let target of cropper.devices) {
+            coords = cropper.getCoords(target);
+            text += `${cropper.getDeviceName(target) }: ${ coords.width }x${ coords.height }+${ coords.x }+${ coords.y } | `;
+            cropper.getDevice(target).coords = coords;
         }
         $('#results').text(`${text}`);
-        console.log(JSON.stringify(croom.devices));
+        console.log(JSON.stringify(cropper.devices));
     });
 });

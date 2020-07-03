@@ -1,0 +1,36 @@
+<% content_for :page_title do %>
+  <%= Spree.t(:cropper_settings) %>
+<% end %>
+
+<%= form_tag admin_cropper_settings_path, method: :put do %>
+
+  <fieldset>
+    <div data-hook="admin_cropper_method_form_fields">
+      <div class="row">
+        <div class="col-md-12" data-hook="cropper_preferences">
+          <fieldset>
+            <legend><%= Spree.t(:cropper_general) %></legend>
+            <div class="checkbox">
+              <%= label_tag(:enabled) do %>
+                <%= preference_field_tag(:enabled, SpreeCropper::Config[:enabled], type: :boolean) %>
+                <%= Spree.t(:enable_cropper) %>
+              <% end %>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend><%= Spree.t(:cropper_devices) %></legend>
+            <div class="form-group">
+              <%= label_tag(:cropper_devices, Spree.t(:cropper_devices)) %>
+              <%= text_area_tag(:cropper_devices, Spree::CropperSetting.cropper_devices, SpreeCropper::Config[:cropper_devices]) %>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="form-actions actions" data-hook="buttons">
+    <%= button Spree.t('actions.update'), 'update' %>
+  </div>
+
+<% end %>

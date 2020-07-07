@@ -1,16 +1,29 @@
 module Spree
-  class CropperImage < Asset
+  class CroppedImage < Asset
     include Rails.application.config.use_paperclip ? Configuration::Paperclip : Configuration::ActiveStorage
     include Rails.application.routes.url_helpers
 
-    # has_many :cropper_device, class_name: 'Spree::CropperDevice'
-    # has_one :image, as: :viewable, class_name: 'Spree::Image'
-    # belongs_to :asset, class_name: 'Spree::Asset'
+    has_many :croppers
 
-    # accepts_nested_attributes_for :cropper_device
-    # delegate :width, to: :cropper_device
+    accepts_nested_attributes_for :croppers
 
-    # validates_presence_of :width, :height, :x, :y, :cmd
+    attr_accessor :dimensions
+    # validates_presence_of :dimensions
+    # before_save :f1
+    # before_update :f2
+    # before_validation :f3
+    def f1
+      byebug
+      # puts dimensions
+    end
+    def f2
+      byebug
+      # puts dimensions
+    end
+    def f3
+      byebug
+      # puts dimensions
+    end
 
     def styles
       self.class.styles.map do |_, size|

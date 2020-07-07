@@ -2,20 +2,20 @@ require 'spec_helper'
 
 RSpec.describe Spree::Cropper, type: :model do
   subject { build :cropper }
-  let(:image) { create :cropper_image }
+  let(:image) { create :cropped_image }
 
   context 'Validation' do
     it 'ok with valid attributes' do
       expect(subject).to be_valid
     end
-    it 'fails without width' do
-      subject.width = nil
+    it 'fails without image' do
+      subject.cropped_image = nil
       expect(subject).to_not be_valid
     end
   end
 
   context 'Associations' do
-    it { should have_many(:images) }
+    it { should belong_to(:cropped_image) }
   end
 
   context 'Attributes' do
@@ -38,13 +38,11 @@ RSpec.describe Spree::Cropper, type: :model do
 
   context 'Image' do
     it 'can be attached' do
-      subject.images << image
-      expect(subject.images.first.attachment.filename).to eq('thinking-cat.jpg')
+      expect(subject.cropped_image.attachment.filename).to eq('thinking-cat.jpg')
     end
     it 'can be cropped' do
-      subject.images << image
-      byebug
-      expect(subject.images.first.attachment.variant(crop: subject.cmd).blob.filename).to eq('thinking-cat.jpg')
+      # byebug
+      expect(subject.cropped_image.attachment.variant(crop: subject.cmd).blob.filename).to eq('thinking-cat.jpg')
     end
   end
 
@@ -57,6 +55,4 @@ RSpec.describe Spree::Cropper, type: :model do
     end
   end
 
-  context 'Devices' do
-  end
 end

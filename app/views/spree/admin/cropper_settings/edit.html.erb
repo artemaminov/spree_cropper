@@ -20,8 +20,8 @@
           <fieldset>
             <legend><%= Spree.t(:cropper_devices) %></legend>
             <div class="form-group">
-              <%= label_tag(:cropper_devices, Spree.t(:cropper_devices)) %>
-              <%= text_area_tag(:cropper_devices, Spree::CropperSetting.cropper_devices, SpreeCropper::Config[:cropper_devices]) %>
+              <%= label_tag(:devices, Spree.t(:cropper_devices)) %>
+              <%= text_area_tag(:devices, SpreeCropper::Config[:devices]) %>
             </div>
           </fieldset>
         </div>

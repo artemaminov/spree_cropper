@@ -1,5 +1,5 @@
 module Spree
-  class CropperImage < Asset
+  class CroppedImage < Asset
     module Configuration
       module ActiveStorage
         extend ActiveSupport::Concern
@@ -10,7 +10,6 @@ module Spree
           has_one_attached :attachment
 
           def self.styles
-            # byebug
             @styles ||= {
                 desktop: '1440x400>',
                 tablet_landscape: '1024x300>',

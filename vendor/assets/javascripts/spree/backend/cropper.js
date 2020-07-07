@@ -54,6 +54,7 @@ Cropper.prototype.initCrop = function(target) {
     $(`#${this.getDeviceName(target)}-canvas`).rcrop({
         minSize: [dimensions.width, dimensions.height],
         preserveAspectRatio: true,
+        grid: true,
         inputs: true,
         preview: {
             display: true,

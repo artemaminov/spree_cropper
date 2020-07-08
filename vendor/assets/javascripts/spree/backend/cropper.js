@@ -1,39 +1,35 @@
 let Cropper = function() {
     this.devices = [
         {
-            desktop: {
-                coords: {},
-                dimensions: {
-                    width: 1024,
-                    height: 400
-                }
+            name: 'desktop',
+            coords: {},
+            dimensions: {
+                width: 1024,
+                height: 400
             }
         },
         {
-            tablet_land: {
-                coords: {},
-                dimensions: {
-                    width: 600,
-                    height: 300
-                }
+            name: 'tablet_landscape',
+            coords: {},
+            dimensions: {
+                width: 600,
+                height: 300
             }
         },
         {
-            tablet_port: {
-                coords: {},
-                dimensions: {
-                    width: 300,
-                    height: 600
-                }
+            name: 'tablet_portrait',
+            coords: {},
+            dimensions: {
+                width: 300,
+                height: 600
             }
         },
         {
-            mobile: {
-                coords: {},
-                dimensions: {
-                    width: 200,
-                    height: 400
-                }
+            name: 'mobile',
+            coords: {},
+            dimensions: {
+                width: 200,
+                height: 400
             }
         },
     ];
@@ -41,17 +37,17 @@ let Cropper = function() {
 
 Cropper.prototype.initTargets = function() {
     for (let target of this.devices) {
-        $('#targets').append(`<div id="target-${this.getDeviceName(target)}"></div>`);
+        $('#targets').append(`<div id="target-${target.name}"></div>`);
         this.canvasCopy(target);
         this.initCrop(target);
     }
 }
 
 Cropper.prototype.initCrop = function(target) {
-    $('#previews').append(`<div id="preview-${this.getDeviceName(target)}"></div>`);
-    let dimensions = this.getDevice(target).dimensions;
+    $('#previews').append(`<div id="preview-${target.name}"></div>`);
+    let dimensions = target.dimensions;
     console.log(dimensions);
-    $(`#${this.getDeviceName(target)}-canvas`).rcrop({
+    $(`#${target.name}-canvas`).rcrop({
         minSize: [dimensions.width, dimensions.height],
         preserveAspectRatio: true,
         grid: true,
@@ -59,7 +55,7 @@ Cropper.prototype.initCrop = function(target) {
         preview: {
             display: true,
             size: [dimensions.width, dimensions.height],
-            wrapper: `#preview-${this.getDeviceName(target)}`,
+            wrapper: `#preview-${target.name}`,
             inputs: true
         }
     });
@@ -70,20 +66,19 @@ Cropper.prototype.getDeviceName = function(device) {
 }
 
 Cropper.prototype.getDevice = function(target) {
-    return target[this.getDeviceName(target)];
+    return target[target.name];
 }
 
 Cropper.prototype.canvasCopy = function(target) {
     let source = document.getElementById(`source`);
-    let deviceName = this.getDeviceName(target);
-    let canvasesContainer = document.getElementById(`target-${deviceName}`);
+    let canvasesContainer = document.getElementById(`target-${target.name}`);
     let canvas = source.cloneNode();
-    canvas.id = `${deviceName}-canvas`;
+    canvas.id = `${target.name}-canvas`;
     canvasesContainer.appendChild(canvas);
 }
 
 Cropper.prototype.getCoords = function(target) {
-    return $(`#${this.getDeviceName(target)}-canvas`).rcrop('getValues');
+    return $(`#${target.name}-canvas`).rcrop('getValues');
 }
 
 $(function() {
@@ -94,10 +89,12 @@ $(function() {
         let coords = {};
         for (let target of cropper.devices) {
             coords = cropper.getCoords(target);
-            text += `${cropper.getDeviceName(target) }: ${ coords.width }x${ coords.height }+${ coords.x }+${ coords.y } | `;
-            cropper.getDevice(target).coords = coords;
+            text += `${ target.name }: ${ coords.width }x${ coords.height }+${ coords.x }+${ coords.y }`;
+            Object.assign(target, coords);
+
+            $(`#${ target.name }_cropper`).val(JSON.stringify(target));
         }
         $('#results').text(`${text}`);
-        console.log(JSON.stringify(cropper.devices));
+        $('#cropper_dimensions').val(JSON.stringify(cropper.devices));
     });
 });

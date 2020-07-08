@@ -1,16 +1,16 @@
 <%= javascript_include_tag 'rcrop/rcrop.min' %>
 <%= javascript_include_tag 'spree/backend/cropper' %>
 <%= stylesheet_link_tag 'rcrop/rcrop.min' %>
-<%# byebug %>
 <%= image_tag(main_app.url_for(resource.cropped_image.attachment), { id: 'source', style: 'max-width: 100%;', data: { devices: Spree::CroppedImage.styles } }) %>
 <button type="button" id="values">Get values</button>
 <br/>
 <span>Values:</span>
-<%= f.fields_for :cropped_image, @object.cropped_image do |cropped_image_fields| %>
-  <% byebug %>
-  <%#= cropped_image_fields.fields_for :croppers, @object.cropped_image.croppers.new do |croppers_fields| %>
-      <%= cropped_image_fields.text_field :dimensions, id: 'cropper_dimensions' %>
-  <%# end %>
+<%= f.fields_for :cropped_image, resource.cropped_image do |cropped_image_fields| %>
+  <% SpreeCropper::Config[:devices].count.times do |i| %>
+    <%= cropped_image_fields.fields_for 'croppers_attributes[]', resource.cropped_image.croppers.build do |croppers_fields| %>
+        <%= croppers_fields.text_field 'dimensions', id: "#{SpreeCropper::Config[:devices].keys[i].to_s}_cropper" %>
+    <% end %>
+  <% end %>
 <% end %>
 <span id="results"></span>
 <div id="targets"></div>

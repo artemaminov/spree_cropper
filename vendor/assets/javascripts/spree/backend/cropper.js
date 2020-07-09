@@ -70,17 +70,14 @@ $(function() {
     let cropper = new Cropper();
     cropper.initTargets();
     $('#values').click(function() {
-        let text = '';
         let coords = {};
         for (let target of cropper.devices) {
             coords = cropper.getCoords(target);
-            text += `${ target.name }: ${ coords.width }x${ coords.height }+${ coords.x }+${ coords.y }`;
             $(`#${ target.name }_cropper_x`).val(coords.x);
             $(`#${ target.name }_cropper_y`).val(coords.y);
             $(`#${ target.name }_cropper_width`).val(coords.width);
             $(`#${ target.name }_cropper_height`).val(coords.height);
             $(`#${ target.name }_cropper_name`).val(target.name);
         }
-        $('#results').text(`${text}`);
     });
 });

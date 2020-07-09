@@ -2,9 +2,9 @@
 <%= javascript_include_tag 'spree/backend/cropper' %>
 <%= stylesheet_link_tag 'rcrop/rcrop.min' %>
 <%= image_tag(main_app.url_for(resource.cropped_image.attachment), { id: 'source', style: 'max-width: 100%;', data: { devices: SpreeCropper::Config[:devices] } }) %>
+<div id="targets"></div>
+<div id="previews"></div>
 <button type="button" id="values">Get values</button>
-<br/>
-<span>Values:</span>
 <%= f.fields_for :cropped_image, resource.cropped_image do |cropped_image_fields| %>
   <% if resource.cropped_image.croppers.empty? %>
     <% SpreeCropper::Config[:devices].count.times do |i| %>
@@ -20,6 +20,6 @@
     <% end %>
   <% end %>
 <% end %>
+<br/>
+<span>Values:</span>
 <span id="results"></span>
-<div id="targets"></div>
-<div id="previews"></div>

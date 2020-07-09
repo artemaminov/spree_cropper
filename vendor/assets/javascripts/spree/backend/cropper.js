@@ -33,27 +33,25 @@ Cropper.prototype.collectData = function() {
 Cropper.prototype.initCrop = function(target) {
     $('#previews').append(`<div id="preview-${target.name}"></div>`);
     let dimensions = target.dimensions;
-    console.log(dimensions);
-    $(`#${target.name}-canvas`).rcrop({
-        minSize: [dimensions.width, dimensions.height],
-        preserveAspectRatio: true,
-        grid: true,
-        inputs: true,
-        preview: {
-            display: true,
-            size: [dimensions.width, dimensions.height],
-            wrapper: `#preview-${target.name}`,
-            inputs: true
-        }
-    });
+    $(`#${target.name}-canvas`)
+        .rcrop({
+            minSize: [dimensions.width, dimensions.height],
+            preserveAspectRatio: true,
+            grid: true,
+            inputs: true,
+            preview: {
+                display: true,
+                size: [dimensions.width, dimensions.height],
+                wrapper: `#preview-${target.name}`,
+            }
+        })
+        .on('rcrop-ready', {object: this, target: target}, function(event) {
+            event.data.object.applyData(event.data.target.name, event.data.target.coords);
+        });
 }
 
-Cropper.prototype.getDeviceName = function(device) {
-    return Object.keys(device)[0];
-}
-
-Cropper.prototype.getDevice = function(target) {
-    return target[target.name];
+Cropper.prototype.applyData = function(targetName, dimensions) {
+    $(`#${targetName}-canvas`).rcrop('resize', dimensions.width, dimensions.height, dimensions.x, dimensions.y);
 }
 
 Cropper.prototype.canvasCopy = function(target) {

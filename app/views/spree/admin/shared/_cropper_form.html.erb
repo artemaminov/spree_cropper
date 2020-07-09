@@ -6,9 +6,17 @@
 <br/>
 <span>Values:</span>
 <%= f.fields_for :cropped_image, resource.cropped_image do |cropped_image_fields| %>
-  <% SpreeCropper::Config[:devices].count.times do |i| %>
-    <%= cropped_image_fields.fields_for 'croppers_attributes[]', resource.cropped_image.croppers.build do |croppers_fields| %>
-        <%= croppers_fields.text_field 'dimensions', id: "#{SpreeCropper::Config[:devices].keys[i].to_s}_cropper" %>
+  <% if resource.cropped_image.croppers.empty? %>
+    <% SpreeCropper::Config[:devices].count.times do |i| %>
+      <%= cropped_image_fields.fields_for 'croppers', resource.cropped_image.croppers.build do |croppers_fields| %>
+        <%# byebug %>
+        <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, device: SpreeCropper::Config[:devices].keys[i].to_s } %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= cropped_image_fields.fields_for :croppers do |croppers_fields| %>
+      <%# byebug %>
+      <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, device: croppers_fields.object.name } %>
     <% end %>
   <% end %>
 <% end %>

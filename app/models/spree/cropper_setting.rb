@@ -2,10 +2,22 @@ module Spree
   class CropperSetting < Preferences::Configuration
     preference :enabled, :boolean, default: true
     preference :devices, :hash, default: {
-        desktop: '1440x400>',
-        tablet_landscape: '1024x300>',
-        tablet_portrait: '600x200>',
-        mobile: '200x200>'
+        desktop: {
+            width: 1440,
+            height: 400
+        },
+        tablet_landscape: {
+            width: 1024,
+            height: 300
+        },
+        tablet_portrait: {
+            width: 600,
+            height: 200
+        },
+        mobile: {
+            width: 200,
+            height: 300
+        }
     }
   end
 end

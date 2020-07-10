@@ -3,7 +3,7 @@ module Spree
     include Rails.application.config.use_paperclip ? Configuration::Paperclip : Configuration::ActiveStorage
     include Rails.application.routes.url_helpers
 
-    has_many :croppers
+    has_many :croppers, dependent: :destroy
 
     accepts_nested_attributes_for :croppers
 

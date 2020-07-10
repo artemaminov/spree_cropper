@@ -9,9 +9,9 @@ module SpreeCropper
 
   module VERSION
     MAJOR = 0
-    MINOR = 0
-    TINY  = 2
-    PRE   = 'alpha'.freeze
+    MINOR = 1
+    TINY  = 0
+    PRE   = 'beta'.freeze
 
     STRING = [MAJOR, MINOR, TINY, PRE].compact.join('.')
   end

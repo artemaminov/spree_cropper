@@ -6,7 +6,7 @@ class Cropper {
         this.initTargets();
     }
 
-    bindDataFetcher(target) {
+    bindAutoFillInputs(target) {
         $(`#${target.name}-canvas`).on('rcrop-changed rcrop-ready', event => this.fill(event, target));
     }
 
@@ -24,7 +24,7 @@ class Cropper {
             $('#targets').append(`<div id="target-${target.name}"></div>`);
             this.canvasCopy(target);
             this.initCrop(target);
-            this.bindDataFetcher(target);
+            this.bindAutoFillInputs(target);
         }
     }
 
@@ -62,13 +62,12 @@ class Cropper {
                     wrapper: `#preview-${target.name}`,
                 }
             })
-            .on('rcrop-ready', {object: this, target: target}, function (event) {
-                event.data.object.applyData(event.data.target.name, event.data.target.coords);
-            });
+            .on('rcrop-ready', event => this.applyData(event, target));
     }
 
-    applyData(targetName, dimensions) {
-        $(`#${targetName}-canvas`).rcrop('resize', dimensions.width, dimensions.height, dimensions.x, dimensions.y);
+    applyData(event, target) {
+        let dimensions = target.coords;
+        $(`#${target.name}-canvas`).rcrop('resize', dimensions.width, dimensions.height, dimensions.x, dimensions.y);
     }
 
     canvasCopy(target) {

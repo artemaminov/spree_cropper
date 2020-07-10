@@ -7,7 +7,7 @@ class Cropper {
     }
 
     bindDataFetcher(target) {
-        $(`#${target.name}-canvas`).on('rcrop-changed', event => this.fill(event, target));
+        $(`#${target.name}-canvas`).on('rcrop-changed rcrop-ready', event => this.fill(event, target));
     }
 
     fill(event, target) {

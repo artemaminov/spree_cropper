@@ -7,16 +7,16 @@ class Cropper {
     }
 
     bindDataFetcher(target) {
-        // console.log(target);
-        $(`#${target.name}-canvas`).on('rcrop-changed', {target: target, cropper: this}, function(event) {
-            let target = event.data.target;
-            let coords = event.data.cropper.getCoords(target);
-            $(`#${ target.name }_cropper_x`).val(coords.x);
-            $(`#${ target.name }_cropper_y`).val(coords.y);
-            $(`#${ target.name }_cropper_width`).val(coords.width);
-            $(`#${ target.name }_cropper_height`).val(coords.height);
-            $(`#${ target.name }_cropper_name`).val(target.name);
-        });
+        $(`#${target.name}-canvas`).on('rcrop-changed', event => this.fill(event, target));
+    }
+
+    fill(event, target) {
+        let coords = this.getCoords(target);
+        $(`#${ target.name }_cropper_x`).val(coords.x);
+        $(`#${ target.name }_cropper_y`).val(coords.y);
+        $(`#${ target.name }_cropper_width`).val(coords.width);
+        $(`#${ target.name }_cropper_height`).val(coords.height);
+        $(`#${ target.name }_cropper_name`).val(target.name);
     }
 
     initTargets() {

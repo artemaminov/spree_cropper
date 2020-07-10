@@ -7,7 +7,6 @@ class CreateSpreeCroppersTable < ActiveRecord::Migration[5.2]
       t.integer :height
       t.integer :x
       t.integer :y
-      t.string :cmd
 
       t.timestamps
     end

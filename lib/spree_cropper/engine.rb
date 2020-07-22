@@ -4,9 +4,6 @@ module SpreeCropper
     isolate_namespace Spree
     engine_name 'spree_cropper'
 
-    initializer 'cropper.preferences', before: :load_config_initializers do
-      SpreeCropper::Config = Spree::CropperSetting.new
-    end
     # use rspec for tests
     config.generators do |g|
       g.test_framework :rspec

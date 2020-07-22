@@ -2,6 +2,7 @@ class CreateSpreeCroppersTable < ActiveRecord::Migration[5.2]
   def change
     create_table :spree_croppers do |t|
       t.references :cropped_image
+      t.references :device
       t.string :name
       t.integer :width
       t.integer :height

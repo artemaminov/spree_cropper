@@ -10,12 +10,7 @@ module Spree
           has_one_attached :attachment
 
           def self.styles
-            @styles ||= {
-                desktop: '1440x400>',
-                tablet_landscape: '1024x300>',
-                tablet_portrait: '600x200>',
-                mobile: '200x200>'
-            }
+            @styles ||= Spree::CropperDevice.dimensions
           end
 
           def default_style

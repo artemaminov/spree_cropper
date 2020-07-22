@@ -1,6 +1,6 @@
 module Spree
   class CroppedImage < Asset
-    include Rails.application.config.use_paperclip ? Configuration::Paperclip : Configuration::ActiveStorage
+    include Configuration::ActiveStorage
     include Rails.application.routes.url_helpers
 
     has_many :croppers, dependent: :destroy

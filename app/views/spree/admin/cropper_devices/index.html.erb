@@ -1,0 +1,37 @@
+<% content_for :page_title do %>
+  <%= plural_resource_name(Spree::CroppedImage) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= button_link_to Spree.t('cropper.device.new'), new_object_url, { class: "btn-success", icon: 'add', id: 'admin_new_device' } %>
+<% end if can? :create, Spree::CroppedImage %>
+
+<table class="table" id='listing_countries' data-hook>
+  <colgroup>
+    <col style="width: 60%">
+    <col style="width: 20%">
+    <col style="width: 20%">
+    <col style="width: 0%">
+  </colgroup>
+  <thead>
+  <tr data-hook="tax_header">
+    <th><%= Spree.t('cropper.device.name') %></th>
+    <th><%= Spree.t('cropper.device.width') %></th>
+    <th><%= Spree.t('cropper.device.height') %></th>
+    <th class="actions"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @cropper_devices.each do |device| %>
+    <tr id="<%= spree_dom_id device %>" data-hook="device_row">
+      <td><%= device.name %></td>
+      <td><%= device.width %></td>
+      <td><%= device.height %></td>
+      <td class="actions actions-2 text-right">
+        <%= link_to_edit(device, no_text: true) if can? :edit, device %>
+        <%= link_to_delete(device, no_text: true) if can? :delete, device %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

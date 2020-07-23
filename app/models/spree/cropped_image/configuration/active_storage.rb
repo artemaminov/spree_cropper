@@ -10,7 +10,7 @@ module Spree
           has_one_attached :attachment
 
           def self.styles
-            @styles ||= Spree::CropperDevice.dimensions
+            @styles ||= Spree::CropperDevice.imagemagick_hash
           end
 
           def default_style

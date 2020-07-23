@@ -7,7 +7,7 @@ Spree::BaseHelper.module_eval do
         end
       }
       unless image.blank?
-        images << [image_tag(main_app.url_for(image.attachment.variant(crop: image.for('desktop'))), class: image_class)]
+        images << [image_tag(main_app.url_for(image.attachment.variant(crop: image.for(Spree::CropperDevice.largest))), class: image_class)]
       end
       safe_join(images, "\n")
     end

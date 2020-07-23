@@ -14,7 +14,7 @@ module Spree
           end
 
           def default_style
-            :desktop
+            Spree::CropperDevice.largest
           end
 
           def accepted_image_types

@@ -13,5 +13,9 @@ module Spree
     def self.largest
       self.dimensions.max_by { |device, dimensions| dimensions.max_by { |k, v| v } }[0]
     end
+
+    def self.smallest
+      self.dimensions.min_by { |device, dimensions| dimensions.max_by { |k, v| v } }[0]
+    end
   end
 end

@@ -5,19 +5,25 @@ ru:
   activerecord:
     attributes:
       spree/cropped_image:
+      spree/cropper_device:
+        name: "Устройство"
+        height: "Высота"
+        width: "Ширина (max-width)"
     errors:
       models:
-        spree/cropped_image:
+        spree/cropper_device:
           attributes:
-            base:
-              keys_should_be_positive_number:
-            preferred_tiers:
-              should_be_hash:
     models:
-      spree/cropped_image:
-        many: "Адресов"
-        one: "Адрес"
-        other: "Адреса"
+      spree/cropper_device:
+        many: "Устройств"
+        one: "Устройства"
+        other: "Устройства"
   spree:
-    cropped_image:
-      column: "Изображение"
+    cropper:
+      nav_tab: "Обрезка изображений"
+      device:
+        name: "Устройство"
+        new: "Добавить устройство"
+        height: "Высота"
+        width: "Ширина (max-width)"
+      devices: "Устройства"

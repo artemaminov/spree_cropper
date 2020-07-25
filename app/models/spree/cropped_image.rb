@@ -8,7 +8,8 @@ module Spree
     accepts_nested_attributes_for :croppers
 
     def for(device)
-      croppers.for_device(device).first.cmd
+      return croppers.for_device(device).first.cmd if croppers.exists?
+      '100x100+0+0'
     end
 
     def styles

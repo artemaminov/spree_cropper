@@ -1,7 +1,6 @@
 class Cropper {
-    devices = [];
-
     constructor() {
+        this.devices = [];
         this.collectData();
         this.initTargets();
     }

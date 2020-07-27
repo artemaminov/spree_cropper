@@ -52,14 +52,8 @@ class Cropper {
         $(`#${target.name}-canvas`)
             .rcrop({
                 minSize: [dimensions.width, dimensions.height],
-                preserveAspectRatio: true,
                 grid: true,
                 inputs: true,
-                preview: {
-                    display: true,
-                    size: [dimensions.width, dimensions.height],
-                    wrapper: `#preview-${target.name}`,
-                }
             })
             .on('rcrop-ready', event => this.applyData(event, target));
     }

@@ -7,7 +7,7 @@ ru:
       spree/cropped_image:
         attachment: "Изображение"
       spree/cropper_dimension:
-        name: "Устройство"
+        name: "Размеры"
         height: "Высота"
         width: "Ширина (max-width)"
     errors:
@@ -16,15 +16,15 @@ ru:
           attributes:
     models:
       spree/cropper_dimension:
-        many: "Устройств"
-        one: "Устройства"
-        other: "Устройства"
+        many: "Размеров"
+        one: "Размер"
+        other: "Размеры"
   spree:
     cropper:
       nav_tab: "Обрезка изображений"
       dimension:
-        name: "Устройство"
-        new: "Добавить устройство"
+        name: "Размеры"
+        new: "Добавить размер"
         height: "Высота"
         width: "Ширина (max-width)"
-      dimensions: "Устройства"
+      dimensions: "Размеры"

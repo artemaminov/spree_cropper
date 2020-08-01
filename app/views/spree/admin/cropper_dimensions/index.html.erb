@@ -1,0 +1,37 @@
+<% content_for :page_title do %>
+  <%= plural_resource_name(Spree::CropperDimension) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= button_link_to Spree.t('cropper.dimension.new'), new_object_url, { class: "btn-success", icon: 'add', id: 'admin_new_cropper_dimension' } %>
+<% end if can? :create, Spree::CroppedImage %>
+
+<table class="table" id='listing_cropper_dimensions' data-hook>
+  <colgroup>
+    <col style="width: 60%">
+    <col style="width: 20%">
+    <col style="width: 20%">
+    <col style="width: 0">
+  </colgroup>
+  <thead>
+  <tr data-hook="tax_header">
+    <th><%= Spree.t('cropper.dimension.name') %></th>
+    <th><%= Spree.t('cropper.dimension.width') %></th>
+    <th><%= Spree.t('cropper.dimension.height') %></th>
+    <th class="actions"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @cropper_dimensions.each do |dimension| %>
+    <tr id="<%= spree_dom_id dimension %>" data-hook="dimension_row">
+      <td><%= dimension.name %></td>
+      <td><%= dimension.width %></td>
+      <td><%= dimension.height %></td>
+      <td class="actions actions-2 text-right">
+        <%= link_to_edit(dimension, no_text: true) if can? :edit, dimension %>
+        <%= link_to_delete(dimension, no_text: true) if can? :delete, dimension %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

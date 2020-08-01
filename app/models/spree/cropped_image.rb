@@ -7,9 +7,9 @@ module Spree
 
     accepts_nested_attributes_for :croppers
 
-    def for(device)
+    def for(dimension)
       if croppers.exists?
-        return croppers.for_device(device).first.cmd unless croppers.for_device(device).first.blank?
+        return croppers.for_dimension(dimension).first.cmd unless croppers.for_dimension(dimension).first.blank?
       end
       '100x100+0+0'
     end

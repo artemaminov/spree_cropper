@@ -1,13 +1,17 @@
 module Spree
   class Cropper < Spree::Base
-    belongs_to :cropped_image, required: true
+    belongs_to :cropped_image
+    belongs_to :dimension, :class_name => 'Spree::CropperDimension'
+
+    accepts_nested_attributes_for :cropped_image
+    accepts_nested_attributes_for :dimension
 
     validates_associated :cropped_image
-    validates_presence_of :name, :width, :height, :x, :y
+    validates_presence_of :width, :height, :x, :y
 
     after_save :process
 
-    scope :for_device, ->(device) { where(name: device) }
+    scope :for_dimension, ->(dimension) { where(name: dimension) }
 
     def process
       self.cropped_image.attachment.variant(crop: self.cmd)

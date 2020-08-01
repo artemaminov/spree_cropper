@@ -1,5 +1,5 @@
 <% content_for :page_actions do %>
-  <%= button_link_to Spree.t(:back_to_resource_list, resource: plural_resource_name(Spree::CropperDevice)), spree.admin_cropper_devices_path, icon: 'arrow-left', class: 'btn-primary' %>
+  <%= button_link_to Spree.t(:back_to_resource_list, resource: plural_resource_name(Spree::CropperDimension)), spree.admin_cropper_dimensions_path, icon: 'arrow-left', class: 'btn-primary' %>
 <% end %>
 
 <%= form_for [:admin, resource] do |f| %>

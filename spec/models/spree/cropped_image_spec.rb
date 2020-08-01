@@ -2,16 +2,16 @@ require 'spec_helper'
 
 RSpec.describe Spree::CroppedImage, type: :model do
   subject { create :cropped_image }
-  # let(:cropper_device) { create :cropper_device }
+  # let(:cropper_dimension) { create :cropper_dimension }
   context 'Attributes' do
     it 'to be valid' do
       # byebug
-      # subject.cropper_device = cropper_device
+      # subject.cropper_dimension = cropper_dimension
       # expect(subject.width).to eq 'sdfdf'
     end
 
-    it 'device to be valid' do
-      expect(subject.dimensions[0].name).to eq(SpreeCropper::Config.devices[:name])
+    it 'dimension to be valid' do
+      expect(subject.dimensions[0].name).to eq(SpreeCropper::Config.dimensions[:name])
     end
   end
 

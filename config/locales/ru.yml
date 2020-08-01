@@ -5,25 +5,26 @@ ru:
   activerecord:
     attributes:
       spree/cropped_image:
-      spree/cropper_device:
+        attachment: "Изображение"
+      spree/cropper_dimension:
         name: "Устройство"
         height: "Высота"
         width: "Ширина (max-width)"
     errors:
       models:
-        spree/cropper_device:
+        spree/cropper_dimension:
           attributes:
     models:
-      spree/cropper_device:
+      spree/cropper_dimension:
         many: "Устройств"
         one: "Устройства"
         other: "Устройства"
   spree:
     cropper:
       nav_tab: "Обрезка изображений"
-      device:
+      dimension:
         name: "Устройство"
         new: "Добавить устройство"
         height: "Высота"
         width: "Ширина (max-width)"
-      devices: "Устройства"
+      dimensions: "Устройства"

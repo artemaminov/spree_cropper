@@ -11,7 +11,9 @@ gem 'spree_backend'
 gem 'spree_auth_devise'
 gem 'rails-controller-testing'
 
-gem 'rubocop', require: false
+gem 'mry'
+gem 'rubocop', '~> 0.81.0', require: false
+gem 'rubocop-rails'
 gem 'rubocop-rspec', require: false
 
 gemspec

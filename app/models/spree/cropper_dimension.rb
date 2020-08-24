@@ -11,11 +11,11 @@ module Spree
     end
 
     def self.largest
-      self.dimensions.max_by { |dimension, dimensions| dimensions.max_by { |k, v| v if v.is_a? Number } }[0]
+      self.dimensions.max_by { |dimension, dimensions| dimensions.max_by { |k, v| v if ['height', 'width'].include? k } }[0]
     end
 
     def self.smallest
-      self.dimensions.min_by { |dimension, dimensions| dimensions.max_by { |k, v| v if v.is_a? Number } }[0]
+      self.dimensions.min_by { |dimension, dimensions| dimensions.max_by { |k, v| v if ['height', 'width'].include? k } }[0]
     end
   end
 end

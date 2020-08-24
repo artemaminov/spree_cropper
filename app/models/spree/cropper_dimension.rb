@@ -3,7 +3,7 @@ module Spree
     has_many :croppers, :class_name => 'Spree::Cropper'
 
     def self.dimensions
-      Hash[all.map { |dimension| [dimension.name, {width: dimension.width, height: dimension.height}] }]
+      Hash[all.map { |dimension| [dimension.name, {width: dimension.width, height: dimension.height, preserveRatio: dimension.preserve_ratio}] }]
     end
 
     def self.imagemagick_hash

@@ -9,6 +9,7 @@ ru:
       spree/cropper_dimension:
         name: "Размеры"
         height: "Высота"
+        preserve_ratio: "Сохранять пропорции"
         width: "Ширина (max-width)"
     errors:
       models:

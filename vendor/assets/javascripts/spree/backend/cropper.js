@@ -53,7 +53,7 @@ class Cropper {
         $(`#${cropper.name}-canvas`)
             .rcrop({
                 minSize: [dimensions.width, dimensions.height],
-                // preserveAspectRatio: true,
+                preserveAspectRatio: dimensions.preserveRatio,
                 grid: true,
                 inputs: true,
                 // preview: {

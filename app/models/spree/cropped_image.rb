@@ -1,5 +1,6 @@
 module Spree
   class CroppedImage < Asset
+    FALLBACK_DIMENSION = '100x100+0+0'.freeze
     include Configuration::ActiveStorage
     include Rails.application.routes.url_helpers
 
@@ -11,7 +12,7 @@ module Spree
       if croppers.exists?
         return croppers.for_dimension(dimension).first.cmd unless croppers.for_dimension(dimension).first.blank?
       end
-      '100x100+0+0'
+      FALLBACK_DIMENSION
     end
 
     def styles

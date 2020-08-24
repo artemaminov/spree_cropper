@@ -11,7 +11,7 @@ module Spree
 
     after_save :process
 
-    scope :for_dimension, ->(dimension) { where(name: dimension) }
+    scope :for_dimension, ->(name) { joins(:dimension).where('spree_cropper_dimensions.name': name) }
 
     def process
       self.cropped_image.attachment.variant(crop: self.cmd)

@@ -75,6 +75,7 @@ class Cropper {
         $(`#${ cropper.name }_cropper_y`).val(coords.y);
         $(`#${ cropper.name }_cropper_width`).val(coords.width);
         $(`#${ cropper.name }_cropper_height`).val(coords.height);
+        $(`#${ cropper.name }_cropper_dimension`).val(cropper.name);
     }
 
     applyData(event, cropper) {

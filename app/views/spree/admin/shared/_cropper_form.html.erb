@@ -7,13 +7,12 @@
 <%= image_tag(main_app.url_for(resource.attachment), { id: 'source', style: 'max-width: 100%;', data: { dimensions: Spree::CropperDimension.dimensions } }) %>
 <div id="croppers"></div>
 <div id="previews"></div>
-<button type="button" id="values">Get values</button>
   <% if resource.croppers.exists? %>
     <%= cropped_image_fields.fields_for :croppers do |croppers_fields| %>
-      <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension: croppers_fields.object.dimension } %>
+      <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension: croppers_fields.object.dimension.name } %>
     <% end %>
-    <% if resource.croppers.count < Spree::CropperDimension.dimensions.count %>
-      <% (Spree::CropperDimension.dimensions.count - resource.croppers.count).times do |i| %>
+    <% if resource.croppers.count < Spree::CropperDimension.all.count %>
+      <% (Spree::CropperDimension.all.count - resource.croppers.count).times do |i| %>
         <%= cropped_image_fields.fields_for :croppers, resource.croppers.build do |croppers_fields| %>
           <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension: Spree::CropperDimension.dimensions.keys[i + resource.croppers.count].to_s } %>
         <% end %>

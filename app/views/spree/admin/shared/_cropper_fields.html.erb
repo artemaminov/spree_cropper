@@ -1,5 +1,6 @@
-<br><span><%= dimension.name %></span>
-<%= croppers_fields.text_field 'x', id: "#{dimension.name}_cropper_x" %>
-<%= croppers_fields.text_field 'y', id: "#{dimension.name}_cropper_y" %>
-<%= croppers_fields.text_field 'width', id: "#{dimension.name}_cropper_width" %>
-<%= croppers_fields.text_field 'height', id: "#{dimension.name}_cropper_height" %>
+<br><span><%= dimension %></span>
+<%= croppers_fields.text_field 'x', id: "#{dimension}_cropper_x" %>
+<%= croppers_fields.text_field 'y', id: "#{dimension}_cropper_y" %>
+<%= croppers_fields.text_field 'width', id: "#{dimension}_cropper_width" %>
+<%= croppers_fields.text_field 'height', id: "#{dimension}_cropper_height" %>
+<%= croppers_fields.text_field 'dimension_id', id: "#{dimension}_cropper_dimension" %>

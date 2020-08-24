@@ -9,20 +9,17 @@ module Spree
     accepts_nested_attributes_for :croppers
 
     def for(dimension)
-      if croppers.exists?
-        return croppers.for_dimension(dimension).first.cmd unless croppers.for_dimension(dimension).first.blank?
-      end
+      return croppers.for_dimension(dimension).first.cmd if croppers.exists? && croppers.for_dimension(dimension).any?
+
       FALLBACK_DIMENSION
     end
 
     def styles
       self.class.styles.map do |_, size|
         width, height = size[/(\d+)x(\d+)/].split('x')
-        {
-            url: polymorphic_path(attachment.variant(resize: size), only_path: true),
-            width: width,
-            height: height
-        }
+        { url: polymorphic_path(attachment.variant(resize: size), only_path: true),
+          width: width,
+          height: height }
       end
     end
   end

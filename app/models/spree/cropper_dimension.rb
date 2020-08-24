@@ -3,7 +3,7 @@ module Spree
     has_many :croppers, :class_name => 'Spree::Cropper'
 
     def self.dimensions
-      Hash[all.map { |dimension| [dimension.name, {width: dimension.width, height: dimension.height, preserveRatio: dimension.preserve_ratio}] }]
+      Hash[all.map { |dimension| [dimension.id, {width: dimension.width, height: dimension.height, preserveRatio: dimension.preserve_ratio}] }]
     end
 
     def self.imagemagick_hash
@@ -11,11 +11,11 @@ module Spree
     end
 
     def self.largest
-      self.dimensions.max_by { |dimension, dimensions| dimensions.max_by { |k, v| v } }[0]
+      self.dimensions.max_by { |dimension, dimensions| dimensions.max_by { |k, v| v if v.is_a? Number } }[0]
     end
 
     def self.smallest
-      self.dimensions.min_by { |dimension, dimensions| dimensions.max_by { |k, v| v } }[0]
+      self.dimensions.min_by { |dimension, dimensions| dimensions.max_by { |k, v| v if v.is_a? Number } }[0]
     end
   end
 end

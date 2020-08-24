@@ -9,7 +9,7 @@
 <div id="previews"></div>
   <% if resource.croppers.exists? %>
     <%= cropped_image_fields.fields_for :croppers do |croppers_fields| %>
-      <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension: croppers_fields.object.dimension.name } %>
+      <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension: croppers_fields.object.dimension } %>
     <% end %>
     <% if resource.croppers.count < Spree::CropperDimension.all.count %>
       <% (Spree::CropperDimension.all.count - resource.croppers.count).times do |i| %>
@@ -19,9 +19,9 @@
       <% end %>
     <% end %>
   <% else %>
-    <% Spree::CropperDimension.dimensions.count.times do |i| %>
+    <% Spree::CropperDimension.all.each do |dimension| %>
       <%= cropped_image_fields.fields_for :croppers, resource.croppers.build do |croppers_fields| %>
-        <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension: Spree::CropperDimension.dimensions.keys[i].to_s } %>
+        <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension: dimension } %>
       <% end %>
     <% end %>
   <% end %>

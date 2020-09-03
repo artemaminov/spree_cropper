@@ -4,13 +4,24 @@
 <%= stylesheet_link_tag 'rcrop/rcrop.min' %>
 <% end %>
 
-<%= image_tag(main_app.url_for(resource.attachment), { id: 'source', style: 'max-width: 100%;', data: { dimensions: Spree::CropperDimension.dimensions } }) %>
+<ul id="croppers-tabs" class="nav nav-tabs" role="tablist">
+  <li role="presentation" class="active"><a href="#main-image" aria-controls="main-image" role="tab" data-toggle="tab"><%= I18n.t('spree.cropper.main_image_tab') %></a></li>
+</ul>
+
+<div id="cropper-tabs-content" class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="main-image">
+    <%= image_tag(main_app.url_for(resource.attachment), { id: 'source', style: 'max-width: 100%;', data: { dimensions: Spree::CropperDimension.dimensions } }) %>
+  </div>
+</div>
+
 <div id="croppers"></div>
 <div id="previews"></div>
+
   <% if resource.croppers.exists? %>
     <%= cropped_image_fields.fields_for :croppers do |croppers_fields| %>
       <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension: croppers_fields.object.dimension } %>
     <% end %>
+    <!--  If cropper added after then add more fields -->
     <% if resource.croppers.count < Spree::CropperDimension.all.count %>
       <% (Spree::CropperDimension.all.count - resource.croppers.count).times do |i| %>
         <%= cropped_image_fields.fields_for :croppers, resource.croppers.build do |croppers_fields| %>

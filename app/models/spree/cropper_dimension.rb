@@ -2,12 +2,13 @@ module Spree
   class CropperDimension < Spree::Base
     has_many :croppers, :class_name => 'Spree::Cropper'
 
+    # Form data for data tag
     def self.dimensions
-      Hash[all.map { |dimension| [dimension.id, {width: dimension.width, height: dimension.height, preserveRatio: dimension.preserve_ratio}] }]
+      Hash[all.map { |dimension| [dimension.id, {name: dimension.name, width: dimension.width, height: dimension.height, preserveRatio: dimension.preserve_ratio}] }]
     end
 
     def self.imagemagick_hash
-      Hash[all.map { |dimension| [dimension.name.to_sym, "#{dimension.width}x#{dimension.height}>"] }]
+      Hash[all.map { |dimension| [dimension.name.to_sym, "#{dimension.width}x#{dimension.height}^"] }]
     end
 
     def self.largest

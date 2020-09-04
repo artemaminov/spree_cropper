@@ -47,7 +47,6 @@ class Cropper {
     }
 
     initCrop(cropper) {
-        $('#previews').append(`<div id="preview-${cropper.id}"></div>`);
         let dimensions = cropper.dimensions;
         $(`#canvas-${cropper.id}`)
             .rcrop({
@@ -55,12 +54,6 @@ class Cropper {
                 preserveAspectRatio: dimensions.preserveRatio,
                 grid: true,
                 inputs: true,
-                // inputsPrefix: `image_combine[cropped_image_attributes][croppers_attributes][${cropper.id}]`
-                // preview: {
-                //     display: true,
-                //     size: [dimensions.width, dimensions.height],
-                //     wrapper: `#preview-${target.name}`,
-                // }
             })
             .on('rcrop-ready', event => this.applyData(cropper));
     }

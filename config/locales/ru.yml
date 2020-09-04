@@ -8,25 +8,25 @@ ru:
         attachment: "Изображение"
       spree/cropper_dimension:
         name: "Наименование"
-        height: "Минимальная высота"
+        height: "Высота"
         preserve_ratio: "Сохранять пропорции"
-        width: "Минимальная ширина"
+        width: "Ширина"
     errors:
       models:
         spree/cropper_dimension:
           attributes:
     models:
       spree/cropper_dimension:
-        many: "Размеров"
-        one: "Размер"
-        other: "Размеры"
+        many: "Размеров устройств"
+        one: "Размер устройства"
+        other: "Размеры устройств"
   spree:
     cropper:
       dimension:
         name: "Наименование"
-        new: "Добавить размер"
-        height: "Минимальная высота"
-        width: "Минимальная ширина"
-      dimensions: "Размеры"
+        new: "Добавить размер устройства"
+        height: "Высота"
+        width: "Ширина"
+      dimensions: "Размеры устройств"
       main_image_tab: "Исходное изображение"
       nav_tab: "Обрезка изображений"

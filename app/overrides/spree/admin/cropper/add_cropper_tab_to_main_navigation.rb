@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 Deface::Override.new(
-  virtual_path: 'spree/layouts/admin',
-  insert_bottom: '#main-sidebar',
-  partial: 'spree/admin/shared/menu/cropper_tab',
+  virtual_path: 'spree/admin/shared/sub_menu/_configuration',
+  insert_bottom: '#sidebar-configuration',
+  partial: 'spree/admin/shared/sub_menu/cropper',
   name: 'cropper_tab'
 )

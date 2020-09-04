@@ -16,6 +16,7 @@ class Cropper {
             cropper.id = cropperName;
             cropper.dimensions = dimensionsData[cropperName];
             cropper.name = cropper.dimensions.name;
+            cropper.nameI18n = cropper.dimensions.name_i18n;
             cropperCoords.width = $(`#cropper_${cropperName}_width`).val();
             cropperCoords.height = $(`#cropper_${cropperName}_height`).val();
             cropperCoords.x = $(`#cropper_${cropperName}_x`).val();
@@ -90,11 +91,11 @@ class Cropper {
         newTabLink.setAttribute('aria-controls', `${cropper.name}`);
         newTabLink.setAttribute('role', "tab");
         newTabLink.setAttribute('data-toggle', "tab");
-        newTabLink.textContent = cropper.name;
+        newTabLink.textContent = cropper.nameI18n;
 
         let newTabPanel = document.createElement("div");
         newTabPanel.setAttribute('role', "tabpanel");
-        newTabPanel.setAttribute('class', "tab-pane");
+        newTabPanel.setAttribute('class', "tab-pane fade");
         newTabPanel.setAttribute('id', `${cropper.name}`);
 
         newTab.appendChild(newTabLink);

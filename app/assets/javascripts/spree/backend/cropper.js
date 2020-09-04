@@ -31,7 +31,7 @@ class Cropper {
         for (let cropper of this.croppers) {
             let newCropper = document.createElement('div');
             newCropper.setAttribute('id', `cropper-${cropper.id}`);
-            // croppers.appendChild(newCropper);
+            // croppers.append(newCropper);
             this.addCropperTab(cropper, newCropper);
             this.canvasCopy(cropper);
             // this.initCrop(cropper);
@@ -44,7 +44,7 @@ class Cropper {
         let canvasContainer = document.getElementById(`cropper-${cropper.id}`);
         let canvas = source.cloneNode();
         canvas.id = `canvas-${cropper.id}`;
-        canvasContainer.appendChild(canvas);
+        canvasContainer.append(canvas);
     }
 
     initCrop(cropper) {
@@ -98,15 +98,15 @@ class Cropper {
         newTabPanel.setAttribute('class', "tab-pane fade");
         newTabPanel.setAttribute('id', `${cropper.name}`);
 
-        newTab.appendChild(newTabLink);
+        newTab.append(newTabLink);
 
         $(newTabLink).on('shown.bs.tab', event => this.initCrop(cropper));
 
         let croppersTabs = document.getElementById("croppers-tabs");
-        croppersTabs.appendChild(newTab);
+        croppersTabs.append(newTab);
         let croppersTabsContentPanel = document.getElementById("cropper-tabs-content");
-        croppersTabsContentPanel.appendChild(newTabPanel);
-        newTabPanel.appendChild(cropperUI);
+        croppersTabsContentPanel.append(newTabPanel);
+        newTabPanel.append(cropperUI);
     }
 }
 

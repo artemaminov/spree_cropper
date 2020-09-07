@@ -1,8 +1,21 @@
 class Cropper {
     constructor() {
         this.croppers = [];
+        this.limits = [];
         this.collectData();
+        this.collectLimitsData();
         this.initTargets();
+    }
+
+    collectLimitsData() {
+        let limitsData = $('#source').data("limits");
+        let limitCoords = {};
+        let limits = Object.keys(limitsData);
+        for (let limitName of limits) {
+            limitCoords.dimensions = limitsData[limitName];
+            limitCoords.name = limitName;
+            this.limits.push(limitCoords);
+        }
     }
 
     collectData() {
@@ -48,15 +61,23 @@ class Cropper {
     }
 
     initCrop(cropper) {
+        let boundaries = [];
         let dimensions = cropper.dimensions;
+        let heightRatio = Number(this.limits[0].dimensions.height / this.limits[0].dimensions.width);
+        if (dimensions.width < dimensions.height) {
+            boundaries = [dimensions.width, dimensions.height];
+        } else {
+            boundaries = [dimensions.width, dimensions.width * heightRatio];
+        }
         $(`#canvas-${cropper.id}`)
             .rcrop({
-                minSize: [dimensions.width, dimensions.height],
+                minSize: boundaries,
                 preserveAspectRatio: dimensions.preserveRatio,
                 grid: true,
                 inputs: true,
             })
             .on('rcrop-ready', event => this.applyData(cropper));
+        console.log([dimensions.width, dimensions.height * ratio]);
     }
 
     bindAutoFillInputs(cropper) {

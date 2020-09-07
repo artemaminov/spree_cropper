@@ -10,7 +10,7 @@
 
 <div id="cropper-tabs-content" class="tab-content">
   <div role="tabpanel" class="tab-pane active" id="main-image">
-    <%= image_tag(main_app.url_for(resource.attachment), { id: 'source', style: 'max-width: 100%', data: { dimensions: Spree::CropperDimension.dimensions }}) %>
+    <%= image_tag(main_app.url_for(resource.attachment), { id: 'source', style: 'max-width: 100%', data: { dimensions: Spree::CropperDimension.dimensions, limits: limits }}) %>
   </div>
 </div>
 

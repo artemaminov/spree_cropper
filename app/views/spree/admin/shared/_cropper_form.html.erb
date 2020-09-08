@@ -4,6 +4,12 @@
 <%= stylesheet_link_tag 'rcrop/rcrop.min' %>
 <% end %>
 
+<%= f.fields_for resource_name do |image_combine_fields| %>
+  <%= image_combine_fields.fields_for :cropped_image, resource.cropped_image || resource.build_cropped_image do |cropped_image_fields| %>
+    <%= cropped_image_fields.file_field :attachment %>
+  <% end %>
+<% end %>
+
 <ul id="croppers-tabs" class="nav nav-tabs" role="tablist">
   <li role="presentation" class="active"><a href="#main-image" aria-controls="main-image" role="tab" data-toggle="tab"><%= I18n.t('spree.cropper.main_image_tab') %></a></li>
 </ul>

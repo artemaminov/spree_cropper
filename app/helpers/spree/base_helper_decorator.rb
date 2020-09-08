@@ -1,5 +1,13 @@
+# frozen_string_literal: true
 Spree::BaseHelper.module_eval do
-  def cropped_image_tag(image, image_class = "")
+  def resize_to_fill(image, options)
+    image.variant(combine_options: { resize: "#{ options[:resize] }^", crop: "#{ options[:crop] }"}).processed
+  end
+
+  def fill_to_resize(image, options)
+    image.variant(combine_options: { crop: "#{ options[:crop] }", resize: "#{ options[:resize] }^"}).processed
+  end
+
     content_tag :picture do
       images = Spree::CropperDimension.dimensions.map { |dimension, dimensions|
         unless image.blank?

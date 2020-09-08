@@ -1,25 +1,18 @@
 class Cropper {
     constructor() {
         this.croppers = [];
-        this.limits = [];
+        this.boundary = {};
         this.collectData();
-        this.collectLimitsData();
-        this.initTargets();
-    }
-
-    collectLimitsData() {
-        let limitsData = $('#source').data("limits");
-        let limitCoords = {};
-        let limits = Object.keys(limitsData);
-        for (let limitName of limits) {
-            limitCoords.dimensions = limitsData[limitName];
-            limitCoords.name = limitName;
-            this.limits.push(limitCoords);
+        if (this.boundary) {
+            this.initTargets();
+        } else {
+            alert("Тип не найден! Добавьте его в разделе Комбинирование - Типы");
         }
     }
 
     collectData() {
         let dimensionsData = $('#source').data("dimensions");
+        let boundary = $('#source').data("boundary");
         let cropperCoords = {};
         let cropper = {};
         let croppers = Object.keys(dimensionsData);
@@ -37,6 +30,7 @@ class Cropper {
             cropper.coords = cropperCoords;
             this.croppers.push(cropper);
         }
+        this.boundary = boundary;
     }
 
     initTargets() {
@@ -61,23 +55,22 @@ class Cropper {
     }
 
     initCrop(cropper) {
-        let boundaries = [];
+        let boundary = [];
         let dimensions = cropper.dimensions;
-        let heightRatio = Number(this.limits[0].dimensions.height / this.limits[0].dimensions.width);
+        let heightRatio = Number(this.boundary.height / this.boundary.width);
         if (dimensions.width < dimensions.height) {
-            boundaries = [dimensions.width, dimensions.height];
+            boundary = [dimensions.width, dimensions.height];
         } else {
-            boundaries = [dimensions.width, dimensions.width * heightRatio];
+            boundary = [dimensions.width, dimensions.width * heightRatio];
         }
         $(`#canvas-${cropper.id}`)
             .rcrop({
-                minSize: boundaries,
+                minSize: boundary,
                 preserveAspectRatio: dimensions.preserveRatio,
                 grid: true,
                 inputs: true,
             })
             .on('rcrop-ready', event => this.applyData(cropper));
-        console.log([dimensions.width, dimensions.height * ratio]);
     }
 
     bindAutoFillInputs(cropper) {

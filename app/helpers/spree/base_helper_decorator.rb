@@ -8,16 +8,28 @@ Spree::BaseHelper.module_eval do
     image.variant(combine_options: { crop: "#{ options[:crop] }", resize: "#{ options[:resize] }^"}).processed
   end
 
+  def cropped_image_tag(image, css_class = '')
     content_tag :picture do
-      images = Spree::CropperDimension.dimensions.map { |dimension, dimensions|
-        unless image.blank?
-          content_tag :source, "", { media: "(max-width: #{ dimensions[:width] }px)", srcset: main_app.url_for(image.attachment.variant(crop: image.for(dimension)))}
+      output = []
+      if image.present?
+        output = Spree::CropperDimension.dimensions.map do |device, dimensions|
+          content_tag :source, '', {
+            media: "(max-width: #{dimensions[:width]}px)",
+            srcset: main_app.url_for(fill_to_resize(
+                                       image.attachment,
+                                       crop: image.cropped_image.for(device),
+                                       resize: "#{dimensions[:width]}x#{dimensions[:height]}"
+                                     ))
+          }
         end
-      }
-      unless image.blank?
-        images << [image_tag(main_app.url_for(image.attachment.variant(crop: image.for(Spree::CropperDimension.largest))), class: image_class)]
+
+        main_image = image_tag(main_app.url_for(fill_to_resize(image.attachment, {
+                                                                 crop: image.cropped_image.for(Spree::CropperDimension.largest),
+                                                                 resize: image.type.dimension_in_text
+                                                               })), css_class)
       end
-      safe_join(images, "\n")
+      output << main_image
+      safe_join(output, "\n")
     end
   end
 end

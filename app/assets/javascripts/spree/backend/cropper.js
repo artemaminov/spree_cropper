@@ -5,8 +5,6 @@ class Cropper {
         this.collectData();
         if (this.boundary) {
             this.initTargets();
-        } else {
-            alert("Тип не найден! Добавьте его в разделе Комбинирование - Типы");
         }
     }
 

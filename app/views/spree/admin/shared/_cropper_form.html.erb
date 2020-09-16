@@ -4,62 +4,53 @@
 <%= stylesheet_link_tag 'rcrop/rcrop.min' %>
 <% end %>
 
-<% if local_assigns[:resource_name] %>
-  <%= f.fields_for resource_name do |image_combine_fields| %>
-    <%= image_combine_fields.fields_for :cropped_image, resource.cropped_image || resource.build_cropped_image do |cropped_image_fields| %>
+<div class="row">
+  <div class="col-lg-6">
+  <% if local_assigns[:resource_name] %>
+    <%= f.fields_for resource_name do |image_combine_fields| %>
+      <div class="form-group">
+        <% selected = resource.boundary_type.try(:id) || Spree::ImageCombineBlockType.find_by_model_class_name(f.object.class.name).try(:id) %>
+        <%= image_combine_fields.label :boundary_type %>
+        <%= image_combine_fields.select :boundary_type_id, Spree::ImageCombineBlockType.all.map { |t| ["#{t.name}", t.id] }, { selected: selected }, { class: "select2" } %>
+        <% if resource.boundary_type.blank? %>
+          <span style="color: red;">Тип не назначен! Система попыталась определить его, если выбор не верный, сделайте это самостоятельно и сохраните перед редактированием границ изобрвжения</span>
+        <% end %>
+      </div>
+      <div class="form-group">
+        <%= image_combine_fields.fields_for :cropped_image, resource.cropped_image || resource.build_cropped_image do |cropped_image_fields| %>
+          <%= cropped_image_fields.label :attachment %>
+          <%= cropped_image_fields.file_field :attachment %>
+        <% end %>
+      </div>
+    <% end %>
+  <% else %>
+    <%= f.fields_for :cropped_image, resource.cropped_image || resource.build_cropped_image do |cropped_image_fields| %>
       <%= cropped_image_fields.label :attachment %>
       <%= cropped_image_fields.file_field :attachment %>
     <% end %>
   <% end %>
-<% else %>
-  <%= f.fields_for :cropped_image, resource.cropped_image || resource.build_cropped_image do |cropped_image_fields| %>
-    <%= cropped_image_fields.label :attachment %>
-    <%= cropped_image_fields.file_field :attachment %>
-  <% end %>
-<% end %>
-
-<ul id="croppers-tabs" class="nav nav-tabs" role="tablist">
-  <li role="presentation" class="active"><a href="#main-image" aria-controls="main-image" role="tab" data-toggle="tab"><%= I18n.t('spree.cropper.main_image_tab') %></a></li>
-</ul>
-
-<% unless resource.new_record? %>
-<div id="cropper-tabs-content" class="tab-content">
-  <div role="tabpanel" class="tab-pane active" id="main-image">
-    <%= image_tag(main_app.url_for(resource.attachment), { id: 'source', style: 'max-width: 100%', data: { dimensions: Spree::CropperDimension.dimensions, boundary: resource.boundaries }}) %>
   </div>
 </div>
 
-<div id="croppers"></div>
-<div id="previews"></div>
+<div class="row">
+  <div class="col-lg-12">
+    <ul id="croppers-tabs" class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#main-image" aria-controls="main-image" role="tab" data-toggle="tab"><%= I18n.t('spree.cropper.main_image_tab') %></a></li>
+    </ul>
 
-  <% if local_assigns[:resource_name] %>
-  <%= f.fields_for resource_name do |image_combine_fields| %>
-    <%= image_combine_fields.fields_for :cropped_image, resource.cropped_image || resource.build_cropped_image do |cropped_image_fields| %>
+  <% unless resource.new_record? %>
+  <div id="cropper-tabs-content" class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="main-image">
+      <%= image_tag(main_app.url_for(resource.attachment), { id: 'source', style: 'max-width: 100%', data: { dimensions: Spree::CropperDimension.dimensions, boundary: resource.boundaries }}) %>
+    </div>
+  </div>
 
-      <% if resource.cropped_image.croppers.exists? %>
-        <%= cropped_image_fields.fields_for :croppers do |croppers_fields| %>
-          <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension: croppers_fields.object.dimension } %>
-        <% end %>
-        <!--  If cropper added after then add more fields -->
-        <% if resource.cropped_image.croppers.count < Spree::CropperDimension.all.count %>
-          <% (Spree::CropperDimension.all.count - resource.cropped_image.croppers.count).times do |i| %>
-            <%= cropped_image_fields.fields_for :croppers, resource.cropped_image.croppers.build do |croppers_fields| %>
-              <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension: Spree::CropperDimension.dimensions.keys[i + resource.cropped_image.croppers.count].to_s } %>
-            <% end %>
-          <% end %>
-        <% end %>
-      <% else %>
-        <% Spree::CropperDimension.all.each do |dimension| %>
-          <%= cropped_image_fields.fields_for :croppers, resource.cropped_image.croppers.build do |croppers_fields| %>
-            <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension: dimension } %>
-          <% end %>
-        <% end %>
-      <% end %>
+  <div id="croppers"></div>
+  <div id="previews"></div>
 
-    <% end %>
-  <% end %>
-  <% else %>
-      <%= f.fields_for :cropped_image, resource.cropped_image || resource.build_cropped_image do |cropped_image_fields| %>
+    <% if local_assigns[:resource_name] %>
+    <%= f.fields_for resource_name do |image_combine_fields| %>
+      <%= image_combine_fields.fields_for :cropped_image, resource.cropped_image || resource.build_cropped_image do |cropped_image_fields| %>
 
         <% if resource.cropped_image.croppers.exists? %>
           <%= cropped_image_fields.fields_for :croppers do |croppers_fields| %>
@@ -82,5 +73,32 @@
         <% end %>
 
       <% end %>
+    <% end %>
+    <% else %>
+        <%= f.fields_for :cropped_image, resource.cropped_image || resource.build_cropped_image do |cropped_image_fields| %>
+
+          <% if resource.cropped_image.croppers.exists? %>
+            <%= cropped_image_fields.fields_for :croppers do |croppers_fields| %>
+              <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension: croppers_fields.object.dimension } %>
+            <% end %>
+            <!--  If cropper added after then add more fields -->
+            <% if resource.cropped_image.croppers.count < Spree::CropperDimension.all.count %>
+              <% (Spree::CropperDimension.all.count - resource.cropped_image.croppers.count).times do |i| %>
+                <%= cropped_image_fields.fields_for :croppers, resource.cropped_image.croppers.build do |croppers_fields| %>
+                  <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension: Spree::CropperDimension.dimensions.keys[i + resource.cropped_image.croppers.count].to_s } %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% else %>
+            <% Spree::CropperDimension.all.each do |dimension| %>
+              <%= cropped_image_fields.fields_for :croppers, resource.cropped_image.croppers.build do |croppers_fields| %>
+                <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension: dimension } %>
+              <% end %>
+            <% end %>
+          <% end %>
+
+        <% end %>
+    <% end %>
   <% end %>
-<% end %>
+  </div>
+</div>

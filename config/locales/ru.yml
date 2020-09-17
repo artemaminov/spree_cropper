@@ -4,6 +4,24 @@
 ru:
   activerecord:
     attributes:
+      spree/image_combine:
+        block_position: "Путь использования (position)"
+        block_type: "Типы"
+        cropped_image: "Пути"
+      spree/image_combine_block_position:
+        name: "Наименование"
+        block_id: "Привязанный объект"
+        block_type: "Тип привязанной модели"
+        controller_name: "Имя контроллера"
+      spree/image_combine_block_type:
+        height: "Высота"
+        name: "Наименование"
+        model_class_name: "Имя класса модели"
+        width: "Ширина"
+      spree/images_positions_type:
+        block_type: "Тип"
+        block_position: "Путь"
+        order: "Порядковый номер"
       spree/cropped_image:
         attachment: "Изображение"
       spree/cropper_dimension:
@@ -20,6 +38,12 @@ ru:
         many: "Размеров устройств"
         one: "Размер устройства"
         other: "Размеры устройств"
+      spree/image_combine:
+        many: "Изображений"
+        one: "Изображение"
+        other: "Изображения"
+      spree/image_combine_block_position: "Путь использования (position)"
+      spree/image_combine_block_type: "Тип использования (type)"
   spree:
     cropper:
       dimension:
@@ -30,3 +54,12 @@ ru:
       dimensions: "Размеры устройств"
       main_image_tab: "Исходное изображение"
       nav_tab: "Обрезка изображений"
+    image_combine:
+      block_position: "Позиционирование"
+      block_position_new: "Добавить блок"
+      block_position_select: "Выберите объект"
+      block_type: "Типы"
+      block_type_new: "Добавить"
+      media: "Изображения"
+      nav_tab: "Комбинирование"
+      new: "Добавить изображение"

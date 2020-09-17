@@ -1,0 +1,37 @@
+<% content_for :page_title do %>
+  <%= plural_resource_name(Spree::ImageCombineBlockType) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= button_link_to Spree.t('image_combine.block_type_new'), new_object_url, { class: "btn-success", icon: 'add', id: 'admin_new_image_combine_block_type' } %>
+<% end if can? :create, Spree::ImageCombineBlockType %>
+
+<table class="table" id='listing_image_combine_block_types' data-hook>
+  <colgroup>
+    <col style="width: 50%">
+    <col style="width: 25%">
+    <col style="width: 25%">
+    <col style="width: 0">
+  </colgroup>
+  <thead>
+  <tr data-hook="tax_header">
+    <th><%= I18n.t(:name, scope: 'activerecord.attributes.spree/image_combine_block_type') %></th>
+    <th><%= I18n.t(:width, scope: 'activerecord.attributes.spree/image_combine_block_type') %></th>
+    <th><%= I18n.t(:height, scope: 'activerecord.attributes.spree/image_combine_block_type') %></th>
+    <th class="actions"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @image_combine_block_types.each do |type| %>
+    <tr id="<%= spree_dom_id type %>" data-hook="combine_row">
+      <td><%= type.name %></td>
+      <td><%= type.width %></td>
+      <td><%= type.height %></td>
+      <td class="actions actions-2 text-right">
+        <%= link_to_edit(type, no_text: true) if can? :edit, type %>
+        <%= link_to_delete(type, no_text: true) if can? :delete, type %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

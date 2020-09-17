@@ -1,0 +1,57 @@
+<% content_for :page_title do %>
+  <%= plural_resource_name(Spree::ImageCombine) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= button_link_to Spree.t('image_combine.new'), new_object_url, { class: "btn-success", icon: 'add', id: 'admin_new_image_combine' } %>
+<% end if can? :create, Spree::ImageCombine %>
+
+<table class="table" id='listing_image_combines' data-hook>
+  <colgroup>
+    <col style="width: 40%">
+    <col style="width: 30%">
+    <col style="width: 30%">
+    <col style="width: 0">
+  </colgroup>
+  <thead>
+  <tr data-hook="tax_header">
+    <th><%= Spree.t('image_combine.media') %></th>
+    <th><%= Spree.t('image_combine.block_type') %></th>
+    <th><%= Spree.t('image_combine.block_position') %></th>
+    <th class="actions"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @image_combines.each do |combine| %>
+    <tr id="<%= spree_dom_id combine %>" data-hook="combine_row">
+      <td>
+        <%= image_tag(main_app.url_for(combine.cropped_image.attachment.variant(resize: '200x200>'))) unless combine.cropped_image.blank? %>
+      </td>
+      <td><table>
+        <% combine.block_positions.each do |t| %>
+          <tr>
+            <td>
+              <%= t.block_type.name unless t.block_type.blank? %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+      </td>
+      <td>
+        <table>
+          <% combine.block_positions.each do |p| %>
+          <tr>
+            <td>
+              <%= p.name %>
+            </td>
+          </tr>
+          <% end %>
+        </table>
+      <td class="actions actions-2 text-right">
+        <%= link_to_edit(combine, no_text: true) if can? :edit, combine %>
+        <%= link_to_delete(combine, no_text: true) if can? :delete, combine %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

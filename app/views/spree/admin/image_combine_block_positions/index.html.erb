@@ -1,0 +1,40 @@
+<% content_for :page_title do %>
+  <%= plural_resource_name(Spree::ImageCombineBlockPosition) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= button_link_to Spree.t('image_combine.block_position_new'), new_object_url, { class: "btn-success", icon: 'add', id: 'admin_new_image_combine_block_position' } %>
+<% end if can? :create, Spree::ImageCombineBlockPosition %>
+
+<table class="table" id='listing_image_combine_block_positions' data-hook>
+  <colgroup>
+    <col style="width: 20%">
+    <col style="width: 40%">
+    <col style="width: 20%">
+    <col style="width: 20%">
+    <col style="width: 0">
+  </colgroup>
+  <thead>
+  <tr data-hook="tax_header">
+    <th><%= I18n.t(:block_type, scope: 'activerecord.attributes.spree/image_combine_block_position') %></th>
+    <th><%= I18n.t(:name, scope: 'activerecord.attributes.spree/image_combine_block_position') %></th>
+    <th><%= I18n.t(:controller_name, scope: 'activerecord.attributes.spree/image_combine_block_position') %></th>
+    <th><%= I18n.t(:block_id, scope: 'activerecord.attributes.spree/image_combine_block_position') %></th>
+    <th class="actions"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @image_combine_block_positions.each do |position| %>
+    <tr id="<%= spree_dom_id position %>" data-hook="combine_row">
+      <td><%= position.block_type.name unless position.block_type.blank? %></td>
+      <td><%= position.name %></td>
+      <td><%= position.controller_name %></td>
+      <td><%= position.fetch_block_name %></td>
+      <td class="actions actions-2 text-right">
+        <%= link_to_edit(position, no_text: true) if can? :edit, position %>
+        <%= link_to_delete(position, no_text: true) if can? :delete, position %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

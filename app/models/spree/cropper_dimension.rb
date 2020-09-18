@@ -4,7 +4,7 @@ module Spree
 
     # Form data for data tag
     def self.dimensions
-      Hash[all.map { |dimension| [dimension.id, {name: dimension.name.parameterize, name_i18n: dimension.name, width: dimension.width, height: dimension.height, preserveRatio: dimension.preserve_ratio}] }]
+      Hash[all.order(width: :asc).map { |dimension| [dimension.id, {name: dimension.name.parameterize, name_i18n: dimension.name, width: dimension.width, height: dimension.height, preserveRatio: dimension.preserve_ratio}] }]
     end
 
     def self.imagemagick_hash

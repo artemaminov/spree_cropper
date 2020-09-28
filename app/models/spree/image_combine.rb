@@ -16,10 +16,6 @@ module Spree
       cropped_image.present? && attachment.present?
     end
 
-    def dimensions
-      type
-    end
-
     # Get type boundaries dimensions
     def boundaries
       if boundary_type.present?
@@ -34,15 +30,5 @@ module Spree
       Spree::ImageCombine.type combinable_type
     end
 
-
-    # Legacy
-    def self.type_dimensions(object)
-      type = get_type(object)
-      "#{type.width}x#{type.height}"
-    end
-
-    def self.get_type(object)
-      Spree::ImageCombineBlockType.find_by_model_class_name(object.class.name)
-    end
   end
 end

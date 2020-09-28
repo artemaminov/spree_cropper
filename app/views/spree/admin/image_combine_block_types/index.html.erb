@@ -8,16 +8,12 @@
 
 <table class="table" id='listing_image_combine_block_types' data-hook>
   <colgroup>
-    <col style="width: 50%">
-    <col style="width: 25%">
-    <col style="width: 25%">
+    <col style="width: 100%">
     <col style="width: 0">
   </colgroup>
   <thead>
   <tr data-hook="tax_header">
     <th><%= I18n.t(:name, scope: 'activerecord.attributes.spree/image_combine_block_type') %></th>
-    <th><%= I18n.t(:width, scope: 'activerecord.attributes.spree/image_combine_block_type') %></th>
-    <th><%= I18n.t(:height, scope: 'activerecord.attributes.spree/image_combine_block_type') %></th>
     <th class="actions"></th>
   </tr>
   </thead>
@@ -25,8 +21,6 @@
   <% @image_combine_block_types.each do |type| %>
     <tr id="<%= spree_dom_id type %>" data-hook="combine_row">
       <td><%= type.name %></td>
-      <td><%= type.width %></td>
-      <td><%= type.height %></td>
       <td class="actions actions-2 text-right">
         <%= link_to_edit(type, no_text: true) if can? :edit, type %>
         <%= link_to_delete(type, no_text: true) if can? :delete, type %>

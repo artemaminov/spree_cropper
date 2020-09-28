@@ -9,14 +9,6 @@ module Spree
 
           has_one_attached :attachment
 
-          def self.styles
-            @styles ||= Spree::CropperDevice.imagemagick_hash
-          end
-
-          def default_style
-            Spree::CropperDevice.largest
-          end
-
           def accepted_image_types
             %w(image/jpeg image/jpg image/png image/gif)
           end

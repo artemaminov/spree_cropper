@@ -14,9 +14,17 @@ module Spree
           end
 
           def check_attachment_content_type
-            if attachment.attached? && !attachment.content_type.in?(accepted_image_types)
+            if not_valid?
               errors.add(:attachment, :not_allowed_content_type)
             end
+          end
+
+          def not_valid?
+            attachment.attached? && !attachment.content_type.in?(accepted_image_types)
+          end
+
+          def is_valid?
+            attachment.attached? && attachment.content_type.in?(accepted_image_types)
           end
         end
       end

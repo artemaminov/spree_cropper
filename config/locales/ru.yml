@@ -6,6 +6,7 @@ ru:
     attributes:
       spree/image_combine:
         block_type: "Типы"
+        boundary_type: "Тип изображения"
         cropped_image: "Пути"
       spree/image_combine_block_type:
         height: "Высота"
@@ -19,11 +20,15 @@ ru:
         attachment: "Изображение"
       spree/cropper_dimension:
         name: "Наименование"
-        height: "Высота"
+        height: "media query (min-height)"
         preserve_ratio: "Сохранять пропорции"
-        width: "Ширина"
+        width: "media query (min-width)"
     errors:
       models:
+        spree/cropped_image:
+          attributes:
+            attachment:
+              not_allowed_content_type: "Данный тип файла не поддерживается"
         spree/cropper_dimension:
           attributes:
     models:
@@ -35,14 +40,14 @@ ru:
         many: "Изображений"
         one: "Изображение"
         other: "Изображения"
-      spree/image_combine_block_type: "Тип использования (type)"
+      spree/image_combine_block_type: "Типы"
   spree:
     cropper:
       dimension:
         name: "Наименование"
         new: "Добавить размер устройства"
-        height: "Высота"
-        width: "Ширина"
+        height: "media query (min-height)"
+        width: "media query (min-width)"
       dimensions: "Размеры устройств"
       main_image_tab: "Исходное изображение"
       nav_tab: "Обрезка изображений"
@@ -50,5 +55,5 @@ ru:
       block_type: "Типы"
       block_type_new: "Добавить"
       media: "Изображения"
-      nav_tab: "Комбинирование"
+      nav_tab: "Кроппер"
       new: "Добавить изображение"

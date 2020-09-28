@@ -1,16 +1,14 @@
 module Spree
   class ImageCombine < Spree::Base
-    has_one :cropped_image, as: :viewable, dependent: :destroy, class_name: 'Spree::CroppedImage'
+    has_one :cropped_image, as: :viewable, class_name: 'Spree::CroppedImage', dependent: :destroy
 
-    belongs_to :boundary_type, class_name: 'Spree::ImageCombineBlockType'
+    belongs_to :boundary_type, class_name: 'Spree::ImageCombineBlockType', optional: true
 
     accepts_nested_attributes_for :cropped_image
 
-    scope :type, ->(model_class_name) { Spree::ImageCombineBlockType.find_by_model_class_name model_class_name }
+    scope :type, ->(model_class_name) { Spree::ImageCombineBlockType.find_by(model_class_name: model_class_name) }
 
-    def attachment
-      cropped_image.attachment
-    end
+    delegate :attachment, :is_valid?, to: :cropped_image
 
     def attached?
       cropped_image.present? && attachment.present?
@@ -19,7 +17,7 @@ module Spree
     # Get type boundaries dimensions
     def boundaries
       if boundary_type.present?
-        { width: boundary_type.width, height: boundary_type.height }
+        boundary_type.dimensions
       else
         false
       end

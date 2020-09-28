@@ -1,16 +1,14 @@
 class Cropper {
     constructor() {
         this.croppers = [];
-        this.boundary = {};
         this.collectData();
-        if (this.boundary) {
+        if (this.croppers) {
             this.initTargets();
         }
     }
 
     collectData() {
         let dimensionsData = $('#source').data("dimensions");
-        let boundary = $('#source').data("boundary");
         let cropperCoords = {};
         let cropper = {};
         let croppers = Object.keys(dimensionsData);
@@ -28,7 +26,6 @@ class Cropper {
             cropper.coords = cropperCoords;
             this.croppers.push(cropper);
         }
-        this.boundary = boundary;
     }
 
     initTargets() {
@@ -53,17 +50,10 @@ class Cropper {
     }
 
     initCrop(cropper) {
-        let boundary = [];
         let dimensions = cropper.dimensions;
-        let heightRatio = Number(this.boundary.height / this.boundary.width);
-        if (dimensions.width < dimensions.height) {
-            boundary = [dimensions.width, dimensions.height];
-        } else {
-            boundary = [dimensions.width, dimensions.width * heightRatio];
-        }
         $(`#canvas-${cropper.id}`)
             .rcrop({
-                minSize: boundary,
+                minSize: [cropper.dimensions.width, cropper.dimensions.height],
                 preserveAspectRatio: dimensions.preserveRatio,
                 grid: true,
                 inputs: true,

@@ -9,7 +9,7 @@
   <% if local_assigns[:resource_name] %>
     <%= f.fields_for resource_name do |image_combine_fields| %>
       <div class="form-group">
-        <% selected = resource.boundary_type.try(:id) || Spree::ImageCombineBlockType.find_by(model_class_name: f.object.class.name).try(:id) %>
+        <% selected = resource.boundary_type.try(:id) || Spree::ImageCombineBlockType.model_id(f.object.class.name) %>
         <%= image_combine_fields.label :boundary_type %>
         <%= image_combine_fields.select :boundary_type_id, Spree::ImageCombineBlockType.all.map { |t| ["#{t.name}", t.id] }, { selected: selected }, { class: "select2", id: 'select2-boundary_type_id' } %>
         <% if resource.boundary_type.blank? %>

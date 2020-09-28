@@ -1,0 +1,4 @@
+<% resource = @image_combine %>
+<% form_for [:admin, resource] do |f| %>
+$('#image-cropper').html('<%= escape_javascript(render partial: 'spree/admin/shared/cropped_image_form', locals: { f: f, resource: resource }) %>');
+<% end %>

@@ -17,7 +17,6 @@
   <tr data-hook="tax_header">
     <th><%= Spree.t('image_combine.media') %></th>
     <th><%= Spree.t('image_combine.block_type') %></th>
-    <th><%= Spree.t('image_combine.block_position') %></th>
     <th class="actions"></th>
   </tr>
   </thead>
@@ -27,26 +26,7 @@
       <td>
         <%= image_tag(main_app.url_for(combine.cropped_image.attachment.variant(resize: '200x200>'))) unless combine.cropped_image.blank? %>
       </td>
-      <td><table>
-        <% combine.block_positions.each do |t| %>
-          <tr>
-            <td>
-              <%= t.block_type.name unless t.block_type.blank? %>
-            </td>
-          </tr>
-        <% end %>
-      </table>
       </td>
-      <td>
-        <table>
-          <% combine.block_positions.each do |p| %>
-          <tr>
-            <td>
-              <%= p.name %>
-            </td>
-          </tr>
-          <% end %>
-        </table>
       <td class="actions actions-2 text-right">
         <%= link_to_edit(combine, no_text: true) if can? :edit, combine %>
         <%= link_to_delete(combine, no_text: true) if can? :delete, combine %>

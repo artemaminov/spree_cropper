@@ -8,9 +8,8 @@
 
 <table class="table" id='listing_image_combines' data-hook>
   <colgroup>
-    <col style="width: 40%">
     <col style="width: 30%">
-    <col style="width: 30%">
+    <col style="width: 70%">
     <col style="width: 0">
   </colgroup>
   <thead>
@@ -24,9 +23,9 @@
   <% @image_combines.each do |combine| %>
     <tr id="<%= spree_dom_id combine %>" data-hook="combine_row">
       <td>
-        <%= image_tag(main_app.url_for(combine.cropped_image.attachment.variant(resize: '200x200>'))) unless combine.cropped_image.blank? %>
+        <%= image_tag(main_app.url_for(fill_to_resize(combine.cropped_image.attachment, { reverse: true }))) if combine.attached? %>
       </td>
-      </td>
+      <td><% combine.boundary_type.name unless combine.boundary_type.blank? %></td>
       <td class="actions actions-2 text-right">
         <%= link_to_edit(combine, no_text: true) if can? :edit, combine %>
         <%= link_to_delete(combine, no_text: true) if can? :delete, combine %>

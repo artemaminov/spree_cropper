@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="col-lg-12">
+    <ul id="croppers-tabs" class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#main-image" aria-controls="main-image" role="tab" data-toggle="tab"><%= I18n.t('spree.cropper.main_image_tab') %></a></li>
+    </ul>
+
+    <% unless resource.new_record? %>
+      <div id="cropper-tabs-content" class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="main-image">
+          <%= image_tag(main_app.url_for(resource.attachment), { id: 'source', style: 'max-width: 100%', data: { dimensions: resource.boundaries, id: resource.id }}) if resource.is_valid? %>
+        </div>
+      </div>
+
+      <div id="croppers"></div>
+      <div id="previews"></div>
+
+      <% if local_assigns[:resource_name] %>
+        <%= f.fields_for resource_name do |image_combine_fields| %>
+          <%= image_combine_fields.fields_for :cropped_image, resource.cropped_image || resource.build_cropped_image do |cropped_image_fields| %>
+
+            <% if resource.cropped_image.croppers.exists? %>
+              <%= cropped_image_fields.fields_for :croppers do |croppers_fields| %>
+                <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension_id: croppers_fields.object.dimension.id } %>
+              <% end %>
+              <!--  If cropper added after then add more fields -->
+              <% if resource.cropped_image.croppers.count < Spree::CropperDimension.all.count %>
+                <% (Spree::CropperDimension.all.count - resource.cropped_image.croppers.count).times do |i| %>
+                  <%= cropped_image_fields.fields_for :croppers, resource.cropped_image.croppers.build do |croppers_fields| %>
+                    <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension_id: Spree::CropperDimension.dimensions.keys[i + resource.cropped_image.croppers.count] } %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% else %>
+              <% Spree::CropperDimension.all.each do |dimension| %>
+                <%= cropped_image_fields.fields_for :croppers, resource.cropped_image.croppers.build do |croppers_fields| %>
+                  <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension_id: dimension.id } %>
+                <% end %>
+              <% end %>
+            <% end %>
+
+          <% end %>
+        <% end %>
+      <% else %>
+        <%= f.fields_for :cropped_image, resource.cropped_image || resource.build_cropped_image do |cropped_image_fields| %>
+
+          <% if resource.cropped_image.croppers.exists? %>
+            <%= cropped_image_fields.fields_for :croppers do |croppers_fields| %>
+              <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension_id: croppers_fields.object.dimension.id } %>
+            <% end %>
+            <!--  If cropper added after then add more fields -->
+            <% if resource.cropped_image.croppers.count < Spree::CropperDimension.all.count %>
+              <% (Spree::CropperDimension.all.count - resource.cropped_image.croppers.count).times do |i| %>
+                <%= cropped_image_fields.fields_for :croppers, resource.cropped_image.croppers.build do |croppers_fields| %>
+                  <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension_id: Spree::CropperDimension.dimensions.keys[i + resource.cropped_image.croppers.count] } %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% else %>
+            <% Spree::CropperDimension.all.each do |dimension| %>
+              <%= cropped_image_fields.fields_for :croppers, resource.cropped_image.croppers.build do |croppers_fields| %>
+                <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension_id: dimension.id } %>
+              <% end %>
+            <% end %>
+          <% end %>
+
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

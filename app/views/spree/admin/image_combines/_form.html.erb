@@ -3,19 +3,6 @@
 <% end %>
 
 <%= form_for [:admin, resource] do |f| %>
-  <div class="row" data-hook="admin_additional_fields">
-    <div class="col-lg-12" data-hook="admin_additional_fields">
-
-      <% resource.build_cropped_image if resource.cropped_image.blank? %>
-      <%#= f.fields_for :cropped_image, resource.cropped_image do |cropped_image_fields| %>
-        <% unless resource.cropped_image.new_record? %>
-<!--          TODO: Bug find out how to fetch resource_name (attribute name) from model instance -->
-          <%= render partial: '/spree/admin/shared/cropper_form', locals: { resource: resource, f: f, limits: resource.boundaries } %>
-        <% end %>
-      <%# end %>
-
-    </div>
-  </div>
-
+  <%= render partial: 'spree/admin/shared/cropper_form', locals: { f: f, resource: resource } %>
   <%= render "spree/admin/shared/#{resource.new_record? ? 'new' : 'edit'}_resource_links" %>
 <% end %>

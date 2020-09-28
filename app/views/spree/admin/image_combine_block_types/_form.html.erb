@@ -19,6 +19,16 @@
       <% end %>
 
     </div>
+
+    <div class="col-lg-6" data-hook="admin_page_form_right">
+
+      <%= field_container f.object, :controller_name, class: ['form-group'] do %>
+        <%= f.label :controller_name %>
+        <%= f.text_field :controller_name, class: 'form-control', required: true %>
+        <%= f.error_message_on :controller_name %>
+      <% end %>
+
+    </div>
   </div>
 
   <div class="row" data-hook="admin_page_form_fields">

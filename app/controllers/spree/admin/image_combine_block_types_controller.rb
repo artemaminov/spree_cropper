@@ -9,8 +9,8 @@ module Spree
             type = Spree::ImageCombineBlockType.find(params[:type])
             return if type.blank?
 
-            records = Object.const_get(type.model_class_name).all
-            render json: { records: records }
+            data = type.fetch_data
+            render json: { records: data }
           end
         end
       end

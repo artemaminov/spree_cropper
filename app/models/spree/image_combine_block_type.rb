@@ -27,5 +27,11 @@ module Spree
       find_by(model_class_name: model_class_name).try(:id)
     end
 
+    # Fetch records for the specified model
+    def fetch_data
+      records = Object.const_get(model_class_name).all
+      records.map { |k| { title: k.try(:name) || k.try(:title), id: k.try(:permalink) || k.try(:slug) || k.try(:id) } }
+    end
+
   end
 end

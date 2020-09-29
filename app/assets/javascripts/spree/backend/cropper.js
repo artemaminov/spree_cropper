@@ -58,7 +58,8 @@ class Cropper {
                 grid: true,
                 inputs: true,
             })
-            .on('rcrop-ready', event => this.applyData(cropper));
+            .on('rcrop-ready', event => this.applyData(cropper))
+            .css('max-width', '100%');
     }
 
     bindAutoFillInputs(cropper) {

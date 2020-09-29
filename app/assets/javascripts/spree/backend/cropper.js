@@ -122,5 +122,5 @@ class Cropper {
 }
 
 $(function() {
-    new Cropper();
+    window.cropper = new Cropper();
 });

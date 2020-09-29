@@ -111,6 +111,14 @@ class Cropper {
         croppersTabsContentPanel.append(newTabPanel);
         newTabPanel.append(cropperUI);
     }
+
+    static destroyAll() {
+        $('#croppers-tabs li:first-child a').tab('show');
+        let croppers = $('#cropper-tabs-content img');
+        for (let cropper of croppers) {
+            $(cropper).rcrop('destroy');
+        }
+    }
 }
 
 $(function() {

@@ -26,6 +26,7 @@ module Spree
           def is_valid?
             attachment.attached? && attachment.content_type.in?(accepted_image_types)
           end
+
         end
       end
     end

@@ -5,8 +5,12 @@ module Spree
 
     accepts_nested_attributes_for :types_dimensions
 
-    def dimension_in_text
-      "#{width}x#{height}"
+    def largest
+      dimensions.max_by { |dimension, dimensions| dimensions.map { |k, v| v if [:height, :width].include? k }.compact }
+    end
+
+    def largest_in_text
+      "#{largest[1][:width]}x#{largest[1][:height]}"
     end
 
     def dimensions

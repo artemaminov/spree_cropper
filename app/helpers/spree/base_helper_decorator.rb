@@ -33,7 +33,7 @@ Spree::BaseHelper.module_eval do
       main_image = image_tag(main_app.url_for(fill_to_resize(
                                                 image.attachment, {
                                                   crop: image.cropped_image.for(Spree::CropperDimension.largest),
-                                                  resize: image.boundary_type.dimension_in_text
+                                                  resize: image.boundary_type.largest_in_text
                                                 }
                                               )), options)
       output << main_image

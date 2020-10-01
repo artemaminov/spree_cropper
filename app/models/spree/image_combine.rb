@@ -6,8 +6,6 @@ module Spree
 
     accepts_nested_attributes_for :cropped_image
 
-    # scope :type, ->(model_class_name) { Spree::ImageCombineBlockType.find_by(model_class_name: model_class_name) }
-
     delegate :attachment, :is_valid?, to: :cropped_image
 
     def attached?
@@ -22,11 +20,6 @@ module Spree
         false
       end
     end
-
-    # Get type class name
-    # def type
-    #   Spree::ImageCombine.type combinable_type
-    # end
 
   end
 end

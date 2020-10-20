@@ -35,6 +35,7 @@
   </div>
 </div>
 
+<% unless resource.cropped_image.new_record? %>
 <div id="image-cropper">
   <% if local_assigns[:resource_name] %>
     <%= render partial: 'spree/admin/shared/cropped_image_form', locals: { f: f, resource: resource, resource_name: resource_name } %>
@@ -42,3 +43,4 @@
     <%= render partial: 'spree/admin/shared/cropped_image_form', locals: { f: f, resource: resource } %>
   <% end %>
 </div>
+<% end %>

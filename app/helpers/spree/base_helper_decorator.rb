@@ -3,12 +3,13 @@
 Spree::BaseHelper.module_eval do
   DEFAULT_CROP = { resize: '200x70^', crop: '200x70+0+0' }.freeze
 
-  def fill_to_resize(image, options = {})
+  def fill_to_resize(image, *args)
+    options = args.shift
     crop = {
-      crop: options.delete(:crop) || DEFAULT_CROP[:crop],
-      resize: options.delete(:resize) || DEFAULT_CROP[:resize]
+      crop: options[:crop] || DEFAULT_CROP[:crop],
+      resize: options[:resize] || DEFAULT_CROP[:resize]
     }
-    if options.delete(:reverse)
+    if options[:reverse]
       image.variant(combine_options: { resize: "#{crop[:resize]}^", crop: crop[:crop] }).processed
     else
       image.variant(combine_options: { crop: crop[:crop], resize: "#{crop[:resize]}^" }).processed

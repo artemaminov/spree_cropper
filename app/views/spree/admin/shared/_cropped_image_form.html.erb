@@ -26,7 +26,7 @@
               <% if resource.cropped_image.croppers.size < Spree::CropperDimension.all.count %>
                 <% (Spree::CropperDimension.all.count - resource.cropped_image.croppers.count).times do |i| %>
                   <%= cropped_image_fields.fields_for :croppers, resource.cropped_image.croppers.build do |croppers_fields| %>
-                    <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension_id: Spree::CropperDimension.dimensions.keys[i + resource.cropped_image.croppers.count] } %>
+                    <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension_id: resource.cropped_image.croppers.count + i + 1 } %>
                   <% end %>
                 <% end %>
               <% end %>
@@ -51,7 +51,7 @@
             <% if resource.cropped_image.croppers.count < Spree::CropperDimension.all.count %>
               <% (Spree::CropperDimension.all.count - resource.cropped_image.croppers.count).times do |i| %>
                 <%= cropped_image_fields.fields_for :croppers, resource.cropped_image.croppers.build do |croppers_fields| %>
-                  <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension_id: Spree::CropperDimension.dimensions.keys[i + resource.cropped_image.croppers.count] } %>
+                  <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension_id: resource.cropped_image.croppers.count + i + 1 } %>
                 <% end %>
               <% end %>
             <% end %>

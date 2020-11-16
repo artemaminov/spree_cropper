@@ -1,9 +1,7 @@
 module Spree
   class CropperDimension < Spree::Base
-    default_scope { order :id }
-
-    has_many :croppers, class_name: 'Spree::Cropper', dependent: :destroy
-    has_many :types_dimensions, class_name: 'Spree::TypesDimension', foreign_key: 'spree_image_combine_block_type_id', inverse_of: :block_type, dependent: :destroy
+    has_many :croppers, class_name: 'Spree::Cropper', foreign_key: :dimension_id, inverse_of: :dimension, dependent: :destroy
+    has_many :types_dimensions, class_name: 'Spree::TypesDimension', foreign_key: :spree_image_combine_block_type_id, inverse_of: :block_type, dependent: :destroy
 
     # Form data for data tag
     def self.dimensions

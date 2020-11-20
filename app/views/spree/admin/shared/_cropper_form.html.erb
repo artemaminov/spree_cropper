@@ -6,6 +6,7 @@
 <% end %>
 
 <div class="row">
+  <%= content_tag :ul, resource.errors.full_messages.map { |error| content_tag :li, error }.join.html_safe, class: 'formError' %>
   <div class="col-lg-6">
   <% if local_assigns[:resource_name] %>
     <%= f.fields_for resource_name do |image_combine_fields| %>

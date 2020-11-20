@@ -6,7 +6,7 @@ module Spree
 
     accepts_nested_attributes_for :cropped_image
 
-    before_update :clean_folder
+    before_save :clean_folder, unless: proc { |ic| ic.cropped_image.new_record? }
 
     delegate :attachment, :is_valid?, to: :cropped_image
 
@@ -36,6 +36,8 @@ module Spree
 
     # Clean folder before new variant created
     def clean_folder
+      return unless cropped_image.croppers.any?
+
       cs = CropperService.new(cropped_image)
       cs.clean_variant_folder
     end

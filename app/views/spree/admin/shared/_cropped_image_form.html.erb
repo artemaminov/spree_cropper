@@ -11,35 +11,20 @@
         </div>
       </div>
 
-      <div id="croppers"></div>
-      <div id="previews"></div>
-
       <% if local_assigns[:resource_name] %>
+
         <%= f.fields_for resource_name do |image_combine_fields| %>
           <%= image_combine_fields.fields_for :cropped_image, resource.cropped_image || resource.build_cropped_image do |cropped_image_fields| %>
 
-            <% if resource.cropped_image.croppers.exists? %>
-              <%= cropped_image_fields.fields_for :croppers do |croppers_fields| %>
-                <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension_id: croppers_fields.object.dimension.id } %>
-              <% end %>
-              <!--  If cropper added after then add more fields -->
-              <% if resource.cropped_image.croppers.size < Spree::CropperDimension.all.count %>
-                <% (Spree::CropperDimension.all.count - resource.cropped_image.croppers.count).times do |i| %>
-                  <%= cropped_image_fields.fields_for :croppers, resource.cropped_image.croppers.build do |croppers_fields| %>
-                    <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension_id: resource.cropped_image.croppers.count + i + 1 } %>
-                  <% end %>
-                <% end %>
-              <% end %>
-            <% else %>
-              <% Spree::CropperDimension.all.each do |dimension| %>
-                <%= cropped_image_fields.fields_for :croppers, resource.cropped_image.croppers.build do |croppers_fields| %>
-                  <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension_id: dimension.id } %>
-                <% end %>
+            <% Spree::CropperDimension.all.each do |dimension| %>
+              <%= cropped_image_fields.fields_for :croppers, resource.cropped_image.croppers.find_by(dimension: dimension) || resource.cropped_image.croppers.build do |croppers_fields| %>
+                <%= render partial: 'spree/admin/shared/cropper_fields', locals: { croppers_fields: croppers_fields, dimension_id: dimension.id } %>
               <% end %>
             <% end %>
 
           <% end %>
         <% end %>
+
       <% else %>
         <%= f.fields_for :cropped_image, resource.cropped_image || resource.build_cropped_image do |cropped_image_fields| %>
 

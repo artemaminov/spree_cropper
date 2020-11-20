@@ -14,7 +14,11 @@ module Spree
     scope :for_dimension, ->(id) { joins(:dimension).where('spree_cropper_dimensions.id': id) }
 
     def process
-      cropped_image.attachment.variant(crop: cmd)
+      cs = CropperService.new(cropped_image)
+      options = { crop: cropped_image.for(dimension),
+                  resize: "#{dimension[:width]}x#{dimension[:height]}"
+      }
+      cs.fill_to_resize(options)
     end
 
     def cmd

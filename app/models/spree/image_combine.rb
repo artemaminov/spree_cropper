@@ -6,19 +6,38 @@ module Spree
 
     accepts_nested_attributes_for :cropped_image
 
+    before_save :clean_folder, unless: :new_record?
+
     delegate :attachment, :is_valid?, to: :cropped_image
 
+    # Is image attached?
     def attached?
       cropped_image.present? && attachment.present?
     end
 
-    # Get type boundaries dimensions
+    # Get type dimensions hash
+    # <tt>Spree::ImageCombineBlockType#dimensions</tt>
+    # {:dimension.id=>{
+    #   :name=>"telefon",
+    #   :name_i18n=>"Телефон",
+    #   :width=>375,
+    #   :height=>800,
+    #   :preserveRatio=>true
+    # }}
     def boundaries
       if boundary_type.present?
         boundary_type.dimensions
       else
         false
       end
+    end
+
+    private
+
+    # Clean folder before new variant created
+    def clean_folder
+      cs = CropperService.new(cropped_image)
+      cs.clean_variant_folder
     end
 
   end

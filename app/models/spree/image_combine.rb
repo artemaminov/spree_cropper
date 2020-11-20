@@ -6,7 +6,7 @@ module Spree
 
     accepts_nested_attributes_for :cropped_image
 
-    before_save :clean_folder, unless: :new_record?
+    before_update :clean_folder
 
     delegate :attachment, :is_valid?, to: :cropped_image
 

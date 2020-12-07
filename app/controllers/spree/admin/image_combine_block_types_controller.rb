@@ -1,12 +1,12 @@
 module Spree
   module Admin
     class ImageCombineBlockTypesController < ResourceController
-      def index
-        return if params[:type].blank?
+      def show
+        return if params[:id].blank?
 
         respond_to do |format|
           format.json do
-            type = Spree::ImageCombineBlockType.find(params[:type])
+            type = Spree::ImageCombineBlockType.find(params[:id])
             return if type.blank?
 
             data = type.fetch_data
